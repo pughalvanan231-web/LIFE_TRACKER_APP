@@ -616,3 +616,151 @@
   margin-top: var(--space-1);
 }
 
+/* --------------------------------------------------------------------------
+   13. Timeline Component
+   -------------------------------------------------------------------------- */
+.timeline {
+  position: relative;
+  padding-left: var(--space-6);
+  margin-left: var(--space-2);
+  border-left: 2px solid var(--color-border-subtle);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.timeline-item {
+  position: relative;
+}
+
+.timeline-dot {
+  position: absolute;
+  left: calc(-1 * var(--space-6) - 5px);
+  top: 4px;
+  width: 10px;
+  height: 10px;
+  border-radius: var(--radius-full);
+  background-color: var(--color-primary-600);
+  border: 2px solid var(--color-surface-card);
+  box-shadow: 0 0 0 2px var(--color-primary-200);
+}
+
+.timeline-dot.dot-completed {
+  background-color: var(--color-success-solid);
+  box-shadow: 0 0 0 2px var(--color-success-border);
+}
+
+.timeline-dot.dot-warning {
+  background-color: var(--color-warning-solid);
+  box-shadow: 0 0 0 2px var(--color-warning-border);
+}
+
+.timeline-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.timeline-date {
+  font-size: var(--font-size-xs);
+  font-family: var(--font-mono);
+  color: var(--color-text-muted);
+}
+
+/* --------------------------------------------------------------------------
+   14. Milestone List & Items
+   -------------------------------------------------------------------------- */
+.milestone-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.milestone-card {
+  background-color: var(--color-surface-card);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4) var(--space-5);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  transition: all var(--transition-fast);
+}
+
+.milestone-card:hover {
+  border-color: var(--color-border-medium);
+  background-color: var(--color-surface-card-subtle);
+}
+
+.milestone-card.completed {
+  opacity: 0.75;
+  background-color: var(--color-surface-hover);
+}
+
+.milestone-card.completed .milestone-title {
+  text-decoration: line-through;
+  color: var(--color-text-muted);
+}
+
+.milestone-order-badge {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  background: var(--color-surface-hover);
+  padding: 2px 6px;
+  border-radius: var(--radius-xs);
+  color: var(--color-text-secondary);
+}
+
+.milestone-weight-badge {
+  font-size: 11px;
+  background: var(--color-primary-100);
+  color: var(--color-primary-700);
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+  font-weight: var(--font-weight-medium);
+}
+
+/* --------------------------------------------------------------------------
+   15. Goal Card Interactions & Filter Bar
+   -------------------------------------------------------------------------- */
+.goal-card-clickable {
+  cursor: pointer;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
+}
+
+.goal-card-clickable:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--color-primary-600);
+}
+
+.filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-3) 0;
+}
+
+.search-input-wrapper {
+  position: relative;
+  min-width: 240px;
+  flex: 1;
+  max-width: 360px;
+}
+
+.search-input-wrapper svg {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--color-text-muted);
+}
+
+.search-input-wrapper input {
+  padding-left: 36px;
+}
+
+

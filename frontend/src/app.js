@@ -16,7 +16,7 @@ import { renderLoadingState } from './components/loading-state.js';
 
 // Application Pages
 import { renderHomePage } from './pages/home.js';
-import { renderGoalsPage } from './pages/goals.js';
+import { renderGoalsPage, bindGoalsEvents } from './pages/goals.js';
 import { renderTasksPage } from './pages/tasks.js';
 import { renderProgressPage } from './pages/progress.js';
 import { renderReportsPage } from './pages/reports.js';
@@ -333,37 +333,8 @@ export class App {
       });
     }
 
-    // 4. Goal Creation Modals
-    const addGoalBtn = this.mount.querySelector('#add-goal-btn');
-    const addGoalEmptyBtn = this.mount.querySelector('#add-goal-empty-btn');
-    const handleAddGoal = () => {
-      appState.openModal({
-        title: 'Define New Goal',
-        content: `
-          <div class="flex flex-col gap-4">
-            <div class="form-group">
-              <label class="form-label" for="new-goal-title">Goal Title</label>
-              <input id="new-goal-title" class="form-input" placeholder="e.g., Run Half-Marathon or Publish Book" />
-            </div>
-            <div class="form-group">
-              <label class="form-label" for="new-goal-timeframe">Timeframe</label>
-              <select id="new-goal-timeframe" class="form-select">
-                <option value="short_term">Short-Term (< 1 Year)</option>
-                <option value="long_term">Long-Term (1-5 Years)</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label class="form-label" for="new-goal-target">Target Metric (Optional)</label>
-              <input id="new-goal-target" class="form-input" placeholder="e.g., 21.1 km or 10 chapters" />
-            </div>
-          </div>
-        `,
-        confirmText: 'Create Goal',
-        cancelText: 'Cancel',
-      });
-    };
-    if (addGoalBtn) addGoalBtn.addEventListener('click', handleAddGoal);
-    if (addGoalEmptyBtn) addGoalEmptyBtn.addEventListener('click', handleAddGoal);
+    // 4. Goals & Milestones Interactive Events
+    bindGoalsEvents(this.mount);
 
     // 5. Task Creation Modals
     const addTaskBtn = this.mount.querySelector('#add-task-btn');

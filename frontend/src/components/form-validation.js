@@ -12,6 +12,10 @@ export const ValidationRules = {
     return null;
   },
 
+  isRequired(label = 'This field') {
+    return (value) => ValidationRules.required(value, label);
+  },
+
   email(value, label = 'Email address') {
     if (!value) return null; // Let required rule check empty
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
