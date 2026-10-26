@@ -151,7 +151,7 @@ The Google Cloud Firestore and Firebase Admin SDKs will automatically route all 
 
 ## 🧪 Testing and Quality Assurance
 
-Run all 46 automated tests (covering authentication, data isolation, parent validation, pagination, transactions, security, and full goals/milestones workflows):
+Run all 55 automated tests (covering authentication, data isolation, parent validation, pagination, transactions, security, goals/milestones, and complete task management/daily planning lifecycles):
 ```powershell
 $env:PYTHONPATH="backend"
 backend\.venv\Scripts\pytest -v backend/tests
@@ -176,7 +176,8 @@ The server will start at `http://127.0.0.1:5000`.
 
 ## 📡 API Endpoints Summary
 
-Detailed API contracts and example payloads are documented in [`docs/goals_milestones_api.md`](file:///d:/projects/life_tracker_app/backend/docs/goals_milestones_api.md).
+- Goals & Milestones API Contract: [`docs/goals_milestones_api.md`](file:///d:/projects/life_tracker_app/backend/docs/goals_milestones_api.md)
+- Tasks & Daily Planning API Contract: [`docs/tasks_daily_planning_api.md`](file:///d:/projects/life_tracker_app/backend/docs/tasks_daily_planning_api.md)
 
 | Method | Endpoint | Auth | Description |
 | :--- | :--- | :--- | :--- |
@@ -193,9 +194,19 @@ Detailed API contracts and example payloads are documented in [`docs/goals_miles
 | `GET` | `/api/v1/goals/<id>/milestones` | **Yes** | List milestones for goal |
 | `PATCH`| `/api/v1/goals/<id>/milestones/<m_id>` | **Yes** | Update milestone, tracks date changes & recalculates goal progress |
 | `DELETE`| `/api/v1/goals/<id>/milestones/<m_id>` | **Yes** | Delete milestone and recalculates parent goal progress |
-| `POST`| `/api/v1/tasks` | **Yes** | Create actionable task |
-| `GET` | `/api/v1/tasks` | **Yes** | List tasks with filters & pagination |
+| `POST`| `/api/v1/tasks` | **Yes** | Create actionable task with duration, deadlines & goal/milestone links |
+| `GET` | `/api/v1/tasks` | **Yes** | List tasks with filters (`date`, `goal_id`, `milestone_id`, `priority`, `status`) |
+| `GET` | `/api/v1/tasks/<id>` | **Yes** | Retrieve single task |
+| `PATCH`| `/api/v1/tasks/<id>` | **Yes** | Update task fields & validate permitted state transitions |
+| `DELETE`| `/api/v1/tasks/<id>` | **Yes** | Delete task permanently or cancel (`?cancel=true`) |
+| `POST`| `/api/v1/tasks/<id>/complete` | **Yes** | Explicitly complete task (never completed automatically) |
+| `POST`| `/api/v1/tasks/<id>/mark-not-completed` | **Yes** | Explicitly mark task as not completed |
+| `POST`| `/api/v1/tasks/<id>/mark-unverified` | **Yes** | Mark unconfirmed work as unverified |
+| `POST`| `/api/v1/tasks/<id>/reschedule` | **Yes** | Reschedule task, preserving original deadline & daily snapshot |
 | `POST`| `/api/v1/tasks/<id>/toggle` | **Yes** | Atomically toggle task completion |
+| `POST`| `/api/v1/tasks/daily-plans` | **Yes** | Create/update daily plan with workload validation & idempotency |
+| `GET` | `/api/v1/tasks/daily-plans/<date>` | **Yes** | Retrieve daily plan and scheduled task instances |
+| `GET` | `/api/v1/tasks/daily-plans` | **Yes** | List historical daily plans with pagination |
 | `POST`| `/api/v1/reviews` | **Yes** | Record a daily reflection review |
 | `GET` | `/api/v1/reviews` | **Yes** | List recent daily reviews |
 | `POST`| `/api/v1/progress/snapshot` | **Yes** | Compute and persist aggregated progress metrics |

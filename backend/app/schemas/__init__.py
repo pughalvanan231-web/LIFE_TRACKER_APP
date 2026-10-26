@@ -30,10 +30,16 @@ from app.schemas.progress import (
     ProgressSnapshotResponse,
 )
 from app.schemas.task import (
+    DailyPlanCreateRequest,
+    DailyPlanResponse,
+    DailyTaskInstanceResponse,
+    RescheduleHistoryEntry,
     TaskCreateRequest,
     TaskPriority,
     TaskRecurrence,
+    TaskRescheduleRequest,
     TaskResponse,
+    TaskStatus,
     TaskUpdateRequest,
 )
 
@@ -59,10 +65,16 @@ __all__ = [
     "MilestoneUpdateRequest",
     "MilestoneResponse",
     "TaskPriority",
+    "TaskStatus",
     "TaskRecurrence",
+    "RescheduleHistoryEntry",
     "TaskCreateRequest",
     "TaskUpdateRequest",
+    "TaskRescheduleRequest",
     "TaskResponse",
+    "DailyTaskInstanceResponse",
+    "DailyPlanCreateRequest",
+    "DailyPlanResponse",
     "DailyReviewCreateRequest",
     "DailyReviewResponse",
     "ProgressSnapshotResponse",
