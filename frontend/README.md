@@ -44,7 +44,10 @@ frontend/
 │   │   ├── bottom-nav.js    # Mobile bottom navigation
 │   │   ├── header.js        # Sticky top header with route titles & actions
 │   │   ├── modal.js         # Accessible modal dialogs
-│   │   └── toast.js         # Floating notification toasts
+│   │   ├── toast.js         # Floating notification toasts
+│   │   ├── loading-state.js # Reusable loading spinner & status
+│   │   ├── empty-state.js   # Reusable empty state cards
+│   │   └── retryable-error.js # Reusable error alert with retry & correlation IDs
 │   ├── pages/               # Application view controllers
 │   │   ├── home.js          # Main dashboard with metrics and focus tasks
 │   │   ├── goals.js         # Goals & Milestones list with progress tracks
@@ -53,6 +56,10 @@ frontend/
 │   │   ├── reports.js       # Periodic performance analytics & breakdowns
 │   │   └── settings.js      # Time zone, notification & theme settings
 │   ├── services/
+│   │   ├── api-client.js    # Shared fetch wrapper with timeout & correlation IDs
+│   │   ├── api-error.js     # Standardized ApiError class & user-friendly messages
+│   │   ├── config.js        # Environment configuration resolver
+│   │   ├── mock-adapter.js  # Separated mock API adapter for offline dev
 │   │   ├── router.js        # Client-side hash router (#/home, #/goals, etc.)
 │   │   ├── state.js         # Centralized pub/sub state manager
 │   │   └── fixtures.js      # Development demo fixtures for UI preview
@@ -66,35 +73,70 @@ frontend/
 │       ├── dom.js           # Safe DOM manipulation helpers
 │       └── formatters.js    # Date, percentage, duration formatters
 └── tests/
+    ├── api-client.test.js   # API client, error mapping, timeout & header tests
+    └── basic.test.js        # Router, formatters, and fixtures tests
 ```
+
+---
+
+## 🌐 API Client & Network Architecture
+
+The frontend integrates with the Flask backend via a centralized, robust API layer:
+
+### 1. Environment Configuration (`.env.example`)
+Copy `.env.example` to `.env.local` to override settings locally:
+```bash
+cp .env.example .env.local
+```
+- `VITE_API_BASE_URL`: Root URL of the REST API (default: `http://127.0.0.1:5000/api/v1`).
+- `VITE_API_TIMEOUT_MS`: Request timeout in milliseconds (default: `15000` / 15s).
+- `VITE_USE_MOCK_API`: Explicit toggle for offline UI development without backend (strictly disabled in production).
+
+### 2. Security & Zero-Trust Perimeter
+- **Zero Server Secrets:** No Gemini API keys, Firebase Admin credentials, or server secrets exist in the frontend bundle.
+- **Trusted Identity Context:** The browser never supplies arbitrary user IDs as proof of identity. The backend derives the authenticated user identity strictly from verified tokens.
+- **Masked Internal Errors:** Raw server tracebacks and internal connection errors are never shown to the user; clean user-friendly descriptions and correlation reference IDs are presented instead.
+
+### 3. Error Mapping Matrix
+| Status | Error Code | Behavior | Retryable |
+| :--- | :--- | :--- | :--- |
+| `400` | `BAD_REQUEST` | Validation error description presented | No |
+| `401` | `UNAUTHORIZED` | Session expired notice | No |
+| `403` | `FORBIDDEN` | Access denied notice | No |
+| `404` | `NOT_FOUND` | Resource missing / removed | No |
+| `409` | `CONFLICT` | Resource already exists notice | No |
+| `422` | `UNPROCESSABLE_ENTITY` | Form field validation errors | No |
+| `429` | `RATE_LIMIT_EXCEEDED` | Displays `Retry-After` seconds countdown | **Yes** |
+| `500+`| `INTERNAL_SERVER_ERROR` | Friendly error notice + request reference ID | **Yes** |
+| `Timeout`| `REQUEST_TIMEOUT` | Network timeout notice | **Yes** |
 
 ---
 
 ## 🚀 Getting Started
 
 ### 1. Install Dependencies
-Navigate to the `frontend/` directory and install dependencies:
 ```bash
 cd frontend
 npm install
 ```
 
-### 2. Run Local Development Server
-Start the Vite development server with Hot Module Replacement:
+### 2. Run Automated Tests
+```bash
+npm test
+```
+
+### 3. Run Local Development Server
 ```bash
 npm run dev
 ```
 The server will start at: **`http://127.0.0.1:5173`**
 
-### 3. Production Build
-Compile and bundle optimized static assets for release:
+### 4. Production Build
 ```bash
 npm run build
 ```
-The generated bundle will be written to `frontend/dist/`.
 
-### 4. Preview Production Build
-Locally preview the production build:
+### 5. Preview Production Build
 ```bash
 npm run preview
 ```
@@ -106,3 +148,4 @@ npm run preview
 - By default, the application opens in a **clean empty state** with helpful onboarding prompts.
 - Click the **"Preview Demo Data"** button in the top header to toggle sample development fixtures (goals, tasks, and completion metrics).
 - A persistent banner clearly informs the user that demo records are for presentation only and are not real saved user data.
+
