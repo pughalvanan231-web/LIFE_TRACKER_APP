@@ -17,3 +17,7 @@ pytest==8.3.4
 
 # Code Quality & Formatting
 ruff==0.9.7
+
+# Cross-platform IANA Timezone Data
+tzdata>=2024.1
+

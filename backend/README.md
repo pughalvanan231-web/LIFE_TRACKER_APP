@@ -151,7 +151,7 @@ The Google Cloud Firestore and Firebase Admin SDKs will automatically route all 
 
 ## 🧪 Testing and Quality Assurance
 
-Run all 55 automated tests (covering authentication, data isolation, parent validation, pagination, transactions, security, goals/milestones, and complete task management/daily planning lifecycles):
+Run all 64 automated tests (covering authentication, data isolation, parent validation, pagination, transactions, security, goals/milestones, task management, daily planning lifecycles, daily reviews, weighted milestone progress, and deterministic reporting):
 ```powershell
 $env:PYTHONPATH="backend"
 backend\.venv\Scripts\pytest -v backend/tests
@@ -178,6 +178,7 @@ The server will start at `http://127.0.0.1:5000`.
 
 - Goals & Milestones API Contract: [`docs/goals_milestones_api.md`](file:///d:/projects/life_tracker_app/backend/docs/goals_milestones_api.md)
 - Tasks & Daily Planning API Contract: [`docs/tasks_daily_planning_api.md`](file:///d:/projects/life_tracker_app/backend/docs/tasks_daily_planning_api.md)
+- Daily Review, Progress & Reporting API Contract: [`docs/daily_review_progress_reporting_api.md`](file:///d:/projects/life_tracker_app/backend/docs/daily_review_progress_reporting_api.md)
 
 | Method | Endpoint | Auth | Description |
 | :--- | :--- | :--- | :--- |
@@ -207,8 +208,16 @@ The server will start at `http://127.0.0.1:5000`.
 | `POST`| `/api/v1/tasks/daily-plans` | **Yes** | Create/update daily plan with workload validation & idempotency |
 | `GET` | `/api/v1/tasks/daily-plans/<date>` | **Yes** | Retrieve daily plan and scheduled task instances |
 | `GET` | `/api/v1/tasks/daily-plans` | **Yes** | List historical daily plans with pagination |
-| `POST`| `/api/v1/reviews` | **Yes** | Record a daily reflection review |
+| `POST`| `/api/v1/reviews` | **Yes** | Submit daily review, freezes task snapshots, marks unconfirmed unverified |
+| `GET` | `/api/v1/reviews/<date>` | **Yes** | Retrieve daily review and frozen task snapshot for date |
+| `GET` | `/api/v1/reviews/<date>/task-history` | **Yes** | Retrieve frozen snapshot or task history for date |
 | `GET` | `/api/v1/reviews` | **Yes** | List recent daily reviews |
-| `POST`| `/api/v1/progress/snapshot` | **Yes** | Compute and persist aggregated progress metrics |
+| `GET` | `/api/v1/progress/daily` | **Yes** | Current local date daily progress (empty state supported) |
+| `GET` | `/api/v1/progress/daily/<date>` | **Yes** | Daily progress calculation for specific date |
+| `GET` | `/api/v1/progress/goals/short-term` | **Yes** | Short-term goal progress based on weighted milestones |
+| `GET` | `/api/v1/progress/goals/long-term` | **Yes** | Long-term goal progress based on weighted milestones |
+| `GET` | `/api/v1/reports/weekly` | **Yes** | Weekly performance report with daily breakdown |
+| `GET` | `/api/v1/reports/monthly` | **Yes** | Monthly performance report with daily breakdown |
+| `GET` | `/api/v1/reports/custom` | **Yes** | Custom date-range performance report (`start_date`, `end_date`) |
 | `POST`| `/api/v1/ai/quota-check` | No | Sample AI route protected by `@ai_usage_limit` |
 

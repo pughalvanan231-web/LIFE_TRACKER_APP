@@ -2,6 +2,7 @@ from flask import Blueprint, g, request
 
 from app.api.v1.goals import goals_bp
 from app.api.v1.progress import progress_bp
+from app.api.v1.reports import reports_bp
 from app.api.v1.tasks import tasks_bp
 from app.middleware.auth import require_auth, require_ownership
 from app.middleware.rate_limit import ai_usage_limit
@@ -14,6 +15,7 @@ api_v1_bp = Blueprint("api_v1", __name__, url_prefix="/api/v1")
 api_v1_bp.register_blueprint(goals_bp)
 api_v1_bp.register_blueprint(tasks_bp)
 api_v1_bp.register_blueprint(progress_bp)
+api_v1_bp.register_blueprint(reports_bp)
 
 
 @api_v1_bp.route("/", methods=["GET"])

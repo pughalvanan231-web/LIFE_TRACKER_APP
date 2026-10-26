@@ -25,9 +25,15 @@ from app.schemas.milestone import (
 )
 from app.schemas.pagination import PaginatedListResponse
 from app.schemas.progress import (
+    DailyProgressResponse,
+    DailyReportMetric,
     DailyReviewCreateRequest,
     DailyReviewResponse,
+    GoalProgressItem,
+    GoalProgressListResponse,
+    PerformanceReportResponse,
     ProgressSnapshotResponse,
+    TaskSnapshotItem,
 )
 from app.schemas.task import (
     DailyPlanCreateRequest,
@@ -77,6 +83,12 @@ __all__ = [
     "DailyPlanResponse",
     "DailyReviewCreateRequest",
     "DailyReviewResponse",
+    "DailyProgressResponse",
+    "GoalProgressItem",
+    "GoalProgressListResponse",
+    "DailyReportMetric",
+    "PerformanceReportResponse",
+    "TaskSnapshotItem",
     "ProgressSnapshotResponse",
     "PaginatedListResponse",
 ]
