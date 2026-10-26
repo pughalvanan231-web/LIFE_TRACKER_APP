@@ -1,0 +1,16 @@
+{
+  "name": "life-goals-ai-frontend",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "node --test tests/basic.test.js"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "vite": "^6.1.1"
+  }
+}

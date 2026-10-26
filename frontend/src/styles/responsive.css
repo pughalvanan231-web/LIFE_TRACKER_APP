@@ -1,0 +1,72 @@
+/* ==========================================================================
+   RESPONSIVE DESIGN BREAKPOINTS & MEDIA QUERIES
+   ========================================================================== */
+
+/* Tablet & Mobile Screens (<= 1024px) */
+@media (max-width: 1024px) {
+  :root {
+    --header-height: 60px;
+  }
+
+  /* Hide Desktop Sidebar by default on smaller screens */
+  .app-sidebar {
+    transform: translateX(-100%);
+    box-shadow: var(--shadow-xl);
+  }
+
+  .app-sidebar.open {
+    transform: translateX(0);
+  }
+
+  /* Main content takes full width */
+  .app-main {
+    margin-left: 0;
+  }
+
+  /* Show Mobile Bottom Navigation */
+  .mobile-bottom-nav {
+    display: flex;
+  }
+
+  /* Extra bottom padding on page container so content is never occluded by bottom bar */
+  .page-container {
+    padding: var(--space-6) var(--space-4);
+    padding-bottom: calc(var(--bottom-nav-height) + var(--space-8));
+    gap: var(--space-6);
+  }
+
+  .app-header {
+    padding: 0 var(--space-4);
+  }
+
+  /* Grid layout adaptations */
+  .grid-4 {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+/* Small Mobile Screens (<= 640px) */
+@media (max-width: 640px) {
+  .page-container {
+    padding: var(--space-4);
+    padding-bottom: calc(var(--bottom-nav-height) + var(--space-8));
+    gap: var(--space-5);
+  }
+
+  .grid-4, .grid-3, .grid-2 {
+    grid-template-columns: 1fr !important;
+  }
+
+  .header-actions .btn-text-hide span {
+    display: none;
+  }
+
+  .card {
+    padding: var(--space-4);
+  }
+
+  .modal-dialog {
+    margin: var(--space-2);
+    max-height: 90vh;
+  }
+}

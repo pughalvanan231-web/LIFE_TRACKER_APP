@@ -1,0 +1,171 @@
+:root {
+  /* ==========================================================================
+     COLOR TOKENS - WARM NEUTRALS & PROFESSIONAL REFINED PALETTE
+     ========================================================================== */
+  
+  /* Warm Neutral Surfaces (Default Light Theme) */
+  --color-surface-ground: #f8f6f0;
+  --color-surface-card: #ffffff;
+  --color-surface-card-subtle: #fcfbf8;
+  --color-surface-hover: #f3f0e6;
+  --color-surface-active: #ece7db;
+  --color-surface-raised: #ffffff;
+  --color-surface-overlay: rgba(23, 25, 35, 0.45);
+
+  /* Deep Charcoal & Navy Text Scale */
+  --color-text-primary: #191c24;
+  --color-text-secondary: #3b4252;
+  --color-text-muted: #64748b;
+  --color-text-subtle: #94a3b8;
+  --color-text-inverse: #ffffff;
+
+  /* Subtle Warm Borders & Dividers */
+  --color-border-subtle: #e8e3d8;
+  --color-border-medium: #d9d2c4;
+  --color-border-strong: #b8aea0;
+  --color-divider: #ede8df;
+
+  /* Restrained Indigo Brand Primary */
+  --color-primary-50: #eef2ff;
+  --color-primary-100: #e0e7ff;
+  --color-primary-200: #c7d2fe;
+  --color-primary-500: #6366f1;
+  --color-primary-600: #4f46e5;
+  --color-primary-700: #4338ca;
+  --color-primary-800: #3730a3;
+  --color-primary-900: #312e81;
+
+  /* Serene Teal Accent */
+  --color-teal-50: #f0fdfa;
+  --color-teal-100: #ccfbf1;
+  --color-teal-500: #14b8a6;
+  --color-teal-600: #0d9488;
+  --color-teal-700: #0f766e;
+
+  /* Soft Pastel Sticky Note Palettes */
+  --sticky-yellow-bg: #fefce8;
+  --sticky-yellow-border: #fef08a;
+  --sticky-yellow-text: #713f12;
+
+  --sticky-sage-bg: #f0fdf4;
+  --sticky-sage-border: #bbf7d0;
+  --sticky-sage-text: #14532d;
+
+  --sticky-sky-bg: #f0f9ff;
+  --sticky-sky-border: #bae6fd;
+  --sticky-sky-text: #0c4a6e;
+
+  --sticky-lilac-bg: #faf5ff;
+  --sticky-lilac-border: #e9d5ff;
+  --sticky-lilac-text: #581c87;
+
+  --sticky-peach-bg: #fff7ed;
+  --sticky-peach-border: #fed7aa;
+  --sticky-peach-text: #7c2d12;
+
+  /* Functional Status Colors */
+  --color-success-bg: #ecfdf5;
+  --color-success-border: #a7f3d0;
+  --color-success-text: #065f46;
+  --color-success-solid: #059669;
+
+  --color-warning-bg: #fffbeb;
+  --color-warning-border: #fde68a;
+  --color-warning-text: #92400e;
+  --color-warning-solid: #d97706;
+
+  --color-danger-bg: #fef2f2;
+  --color-danger-border: #fecaca;
+  --color-danger-text: #991b1b;
+  --color-danger-solid: #dc2626;
+
+  --color-info-bg: #eff6ff;
+  --color-info-border: #bfdbfe;
+  --color-info-text: #1e40af;
+  --color-info-solid: #2563eb;
+
+  --color-unverified-bg: #f8fafc;
+  --color-unverified-border: #cbd5e1;
+  --color-unverified-text: #475569;
+
+  /* ==========================================================================
+     TYPOGRAPHY SCALE
+     ========================================================================== */
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+
+  --font-size-xs: 0.75rem;    /* 12px */
+  --font-size-sm: 0.875rem;   /* 14px */
+  --font-size-base: 1rem;     /* 16px */
+  --font-size-md: 1.125rem;   /* 18px */
+  --font-size-lg: 1.25rem;    /* 20px */
+  --font-size-xl: 1.5rem;     /* 24px */
+  --font-size-2xl: 1.875rem;  /* 30px */
+  --font-size-3xl: 2.25rem;   /* 36px */
+
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --font-weight-extrabold: 800;
+
+  --line-height-tight: 1.25;
+  --line-height-normal: 1.5;
+  --line-height-relaxed: 1.625;
+
+  /* ==========================================================================
+     SPACING & LAYOUT TOKENS
+     ========================================================================== */
+  --space-1: 0.25rem;   /* 4px */
+  --space-2: 0.5rem;    /* 8px */
+  --space-3: 0.75rem;   /* 12px */
+  --space-4: 1rem;      /* 16px */
+  --space-5: 1.25rem;   /* 20px */
+  --space-6: 1.5rem;    /* 24px */
+  --space-8: 2rem;      /* 32px */
+  --space-10: 2.5rem;   /* 40px */
+  --space-12: 3rem;     /* 48px */
+  --space-16: 4rem;     /* 64px */
+
+  --sidebar-width: 260px;
+  --sidebar-collapsed-width: 76px;
+  --bottom-nav-height: 64px;
+  --header-height: 68px;
+  --max-content-width: 1280px;
+
+  /* ==========================================================================
+     RADIUS TOKENS (Restrained & Elegant)
+     ========================================================================== */
+  --radius-xs: 4px;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
+  --radius-full: 9999px;
+
+  /* ==========================================================================
+     WARM ELEVATION & SHADOWS
+     ========================================================================== */
+  --shadow-subtle: 0 1px 2px rgba(27, 24, 18, 0.04);
+  --shadow-sm: 0 1px 3px rgba(27, 24, 18, 0.06), 0 1px 2px rgba(27, 24, 18, 0.04);
+  --shadow-md: 0 4px 6px -1px rgba(27, 24, 18, 0.07), 0 2px 4px -2px rgba(27, 24, 18, 0.05);
+  --shadow-lg: 0 10px 15px -3px rgba(27, 24, 18, 0.08), 0 4px 6px -4px rgba(27, 24, 18, 0.04);
+  --shadow-xl: 0 20px 25px -5px rgba(27, 24, 18, 0.1), 0 8px 10px -6px rgba(27, 24, 18, 0.04);
+
+  /* ==========================================================================
+     TRANSITIONS & ACCESSIBILITY
+     ========================================================================== */
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 220ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 320ms cubic-bezier(0.4, 0, 0.2, 1);
+  --focus-ring: 0 0 0 3px rgba(99, 102, 241, 0.35);
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --transition-fast: 0.01ms;
+    --transition-normal: 0.01ms;
+    --transition-slow: 0.01ms;
+  }
+}
