@@ -12,6 +12,7 @@ from app.schemas.ai import (
     TaskSuggestionItem,
 )
 from app.schemas.auth import AuthenticatedUser, SafeUserProfile
+from app.schemas.job import JobExecutionRequest, JobExecutionResponse
 from app.schemas.common import (
     AppBaseModel,
     ErrorDetail,
@@ -115,4 +116,6 @@ __all__ = [
     "ExplainGoalProgressResponse",
     "TaskBreakdownRequest",
     "TaskBreakdownResponse",
+    "JobExecutionRequest",
+    "JobExecutionResponse",
 ]

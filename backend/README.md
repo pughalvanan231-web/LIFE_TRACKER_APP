@@ -151,7 +151,7 @@ The Google Cloud Firestore and Firebase Admin SDKs will automatically route all 
 
 ## 🧪 Testing and Quality Assurance
 
-Run all 76 automated tests (covering authentication, data isolation, parent validation, pagination, transactions, security, goals/milestones, task management, daily planning lifecycles, daily reviews, weighted milestone progress, deterministic reporting, and secure provider-independent AI orchestration):
+Run all 85 automated tests (covering authentication, data isolation, parent validation, pagination, transactions, security, goals/milestones, task management, daily planning lifecycles, daily reviews, weighted milestone progress, deterministic reporting, secure AI orchestration, and timezone-aware idempotent scheduled backend jobs):
 ```powershell
 $env:PYTHONPATH="backend"
 backend\.venv\Scripts\pytest -v backend/tests
@@ -180,6 +180,7 @@ The server will start at `http://127.0.0.1:5000`.
 - Tasks & Daily Planning API Contract: [`docs/tasks_daily_planning_api.md`](file:///d:/projects/life_tracker_app/backend/docs/tasks_daily_planning_api.md)
 - Daily Review, Progress & Reporting API Contract: [`docs/daily_review_progress_reporting_api.md`](file:///d:/projects/life_tracker_app/backend/docs/daily_review_progress_reporting_api.md)
 - AI Service Architecture & Contract: [`docs/ai_service.md`](file:///d:/projects/life_tracker_app/backend/docs/ai_service.md)
+- Scheduled Backend Jobs Architecture & Production Setup: [`docs/scheduled_jobs.md`](file:///d:/projects/life_tracker_app/backend/docs/scheduled_jobs.md)
 
 | Method | Endpoint | Auth | Description |
 | :--- | :--- | :--- | :--- |
@@ -226,4 +227,8 @@ The server will start at `http://127.0.0.1:5000`.
 | `POST`| `/api/v1/ai/explain-progress` | **Yes** | Qualitative goal progress explanation, strengths, bottlenecks, next actions |
 | `POST`| `/api/v1/ai/task-breakdown` | **Yes** | Decompose large or complex tasks into 2-10 actionable subtasks |
 | `POST`| `/api/v1/ai/quota-check` | No | Sample AI route protected by `@ai_usage_limit` |
+| `POST`| `/api/v1/jobs/midnight-closing` | **Job Auth** | Hourly scheduled job closing past unclosed days per user timezone |
+| `POST`| `/api/v1/jobs/overdue-detection` | **Job Auth** | Hourly scheduled job detecting overdue goals & milestones |
+| `POST`| `/api/v1/jobs/run-all` | **Job Auth** | Unified pipeline: midnight closing, overdue detection & weekly summaries |
+
 

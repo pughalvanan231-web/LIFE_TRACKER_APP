@@ -2,6 +2,7 @@ from flask import Blueprint, g, request
 
 from app.api.v1.ai import ai_bp
 from app.api.v1.goals import goals_bp
+from app.api.v1.jobs import jobs_bp
 from app.api.v1.progress import progress_bp
 from app.api.v1.reports import reports_bp
 from app.api.v1.tasks import tasks_bp
@@ -18,6 +19,7 @@ api_v1_bp.register_blueprint(tasks_bp)
 api_v1_bp.register_blueprint(progress_bp)
 api_v1_bp.register_blueprint(reports_bp)
 api_v1_bp.register_blueprint(ai_bp)
+api_v1_bp.register_blueprint(jobs_bp)
 
 
 @api_v1_bp.route("/", methods=["GET"])

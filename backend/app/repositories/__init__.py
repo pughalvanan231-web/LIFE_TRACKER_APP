@@ -4,6 +4,7 @@ from app.repositories.goal_repository import GoalRepository
 from app.repositories.milestone_repository import MilestoneRepository
 from app.repositories.progress_repository import ProgressRepository
 from app.repositories.task_repository import TaskRepository
+from app.repositories.user_repository import UserRepository
 
 __all__ = [
     "BaseRepository",
@@ -12,4 +13,6 @@ __all__ = [
     "MilestoneRepository",
     "TaskRepository",
     "ProgressRepository",
+    "UserRepository",
 ]
+

@@ -59,12 +59,14 @@ class MockQuery:
         self.filters = []
         self.order_field = None
         self.order_desc = False
+        self.limit_count = None
 
     def where(self, field: str, op: str, value):
         new_q = MockQuery(self.store, self.prefix)
         new_q.filters = list(self.filters) + [(field, op, value)]
         new_q.order_field = self.order_field
         new_q.order_desc = self.order_desc
+        new_q.limit_count = self.limit_count
         return new_q
 
     def order_by(self, field: str, direction: str = "ASCENDING"):
@@ -72,12 +74,35 @@ class MockQuery:
         new_q.filters = list(self.filters)
         new_q.order_field = field
         new_q.order_desc = direction.upper() == "DESCENDING"
+        new_q.limit_count = self.limit_count
+        return new_q
+
+    def limit(self, count: int):
+        new_q = MockQuery(self.store, self.prefix)
+        new_q.filters = list(self.filters)
+        new_q.order_field = self.order_field
+        new_q.order_desc = self.order_desc
+        new_q.limit_count = count
         return new_q
 
     def stream(self):
         matched = []
+        seen_user_ids = set()
+
         for path, data in self.store.items():
             if path.startswith(self.prefix):
+                # If querying top-level "users", extract unique user ids
+                if self.prefix == "users":
+                    parts = path.split("/")
+                    if len(parts) >= 2:
+                        uid = parts[1]
+                        if uid not in seen_user_ids:
+                            seen_user_ids.add(uid)
+                            user_data = self.store.get(f"users/{uid}") or {"uid": uid}
+                            user_data.setdefault("uid", uid)
+                            matched.append(MockDocumentSnapshot(uid, user_data))
+                    continue
+
                 # Apply where filters
                 match = True
                 for field, op, val in self.filters:
@@ -93,6 +118,8 @@ class MockQuery:
                 key=lambda x: str(x.to_dict().get(self.order_field, "")),
                 reverse=self.order_desc,
             )
+        if self.limit_count is not None:
+            matched = matched[: self.limit_count]
         return iter(matched)
 
 
@@ -109,6 +136,9 @@ class MockCollectionReference:
 
     def order_by(self, field: str, direction: str = "ASCENDING"):
         return MockQuery(self.store, self.path).order_by(field, direction)
+
+    def limit(self, count: int):
+        return MockQuery(self.store, self.path).limit(count)
 
     def stream(self):
         return MockQuery(self.store, self.path).stream()
@@ -154,14 +184,43 @@ class MockTopLevelCollection:
     def document(self, doc_id: str):
         return MockUserDocument(self.store, f"{self.name}/{doc_id}")
 
+    def order_by(self, field: str, direction: str = "ASCENDING"):
+        return MockQuery(self.store, self.name).order_by(field, direction)
+
+    def limit(self, count: int):
+        return MockQuery(self.store, self.name).limit(count)
+
+    def stream(self):
+        return MockQuery(self.store, self.name).stream()
+
 
 class MockUserDocument:
     def __init__(self, store: dict, path: str):
         self.store = store
         self.path = path
+        self.id = path.split("/")[-1]
 
     def collection(self, subcollection: str):
         return MockCollectionReference(self.store, f"{self.path}/{subcollection}")
+
+    def get(self, transaction=None) -> MockDocumentSnapshot:
+        data = self.store.get(self.path)
+        return MockDocumentSnapshot(self.id, data)
+
+    def set(self, data: dict, merge: bool = False):
+        if merge and self.path in self.store:
+            self.store[self.path].update(data)
+        else:
+            self.store[self.path] = dict(data)
+
+    def update(self, data: dict):
+        if self.path in self.store:
+            self.store[self.path].update(data)
+        else:
+            self.store[self.path] = dict(data)
+
+    def delete(self):
+        self.store.pop(self.path, None)
 
 
 @pytest.fixture

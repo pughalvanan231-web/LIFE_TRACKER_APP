@@ -66,6 +66,20 @@ class BaseConfig:
         os.getenv("AI_MAX_INPUT_PROMPT_LENGTH", "2000")
     )
 
+    # Scheduled Jobs & Google OIDC Invocation
+    JOB_SECRET_KEY: str | None = os.getenv("JOB_SECRET_KEY")
+    JOB_AUDIENCE: str | None = os.getenv("JOB_AUDIENCE")
+    JOB_ALLOWED_SERVICE_ACCOUNTS_RAW: str = os.getenv(
+        "JOB_ALLOWED_SERVICE_ACCOUNTS", ""
+    )
+    JOB_BATCH_SIZE: int = int(os.getenv("JOB_BATCH_SIZE", "50"))
+
+    # Push Notifications & Reminders
+    NOTIFICATION_PROVIDER: str = os.getenv("NOTIFICATION_PROVIDER", "fcm").lower()
+    NOTIFICATIONS_ENABLED: bool = os.getenv(
+        "NOTIFICATIONS_ENABLED", "true"
+    ).lower() in ("true", "1", "yes")
+
     # Health & Readiness behavior
     HEALTH_REQUIRE_FIREBASE: bool = os.getenv(
         "HEALTH_REQUIRE_FIREBASE", "false"
@@ -137,6 +151,8 @@ class TestingConfig(BaseConfig):
     CORS_ALLOWED_ORIGINS_RAW: str = "http://localhost:5173,http://testclient.local"
     HEALTH_REQUIRE_FIREBASE: bool = False
     AI_PROVIDER: str = "mock"
+    JOB_SECRET_KEY: str = "test-job-secret-key-life-goals"
+    NOTIFICATION_PROVIDER: str = "mock"
 
 
 @dataclass
