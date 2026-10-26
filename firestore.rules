@@ -1,0 +1,38 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // =========================================================================
+    // Life Goals AI - Firestore Security Rules
+    // =========================================================================
+    // ARCHITECTURAL ACCESS POLICY: Backend-as-Proxy Pattern
+    //
+    // All reads, writes, transactions, and business logic are mediated strictly
+    // by the secure Flask API backend using the Firebase Admin SDK.
+    // Direct browser / mobile client reads and writes are explicitly DENIED
+    // to prevent unauthorized tampering, quota bypass, or cross-tenant data leaks.
+    //
+    // NOTE: Firebase Admin SDK executions bypass these rules automatically.
+    // Backend application-level authorization (@require_auth, @require_ownership)
+    // is enforced for every operation.
+    // =========================================================================
+
+    // Private user-scoped trees: users/{userId}/...
+    match /users/{userId} {
+      // Direct client access denied by default in Backend-as-Proxy architecture
+      allow read, write: if false;
+
+      // Subcollections: goals, milestones, tasks, dailyReviews, progressSnapshots
+      match /{subcollection}/{docId=**} {
+        // If direct client SDK access is ever selectively enabled in future phases,
+        // it must strictly require authenticated user ownership:
+        // allow read, write: if request.auth != null && request.auth.uid == userId;
+        allow read, write: if false;
+      }
+    }
+
+    // Default catch-all: reject any direct client access to unspecified collections
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

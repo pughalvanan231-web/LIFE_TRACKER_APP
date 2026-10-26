@@ -1,0 +1,27 @@
+# Python bytecode & cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.pytest_cache/
+.ruff_cache/
+htmlcov/
+.coverage
+
+# Virtual Environment
+.venv/
+env/
+venv/
+ENV/
+
+# Secrets & Local Environment
+.env
+*.pem
+*.key
+serviceAccountKey.json
+firebase-credentials.json
+firebase-adminsdk*.json
+
+# OS files
+.DS_Store
+Thumbs.db

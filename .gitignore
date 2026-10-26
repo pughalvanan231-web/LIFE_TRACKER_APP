@@ -1,0 +1,23 @@
+# Virtual environments
+.venv/
+backend/.venv/
+env/
+venv/
+
+# Python cache
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+
+# Sensitive files & environment
+.env
+*.pem
+*serviceAccountKey*.json
+*firebase-adminsdk*.json
+
+# IDE & OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
