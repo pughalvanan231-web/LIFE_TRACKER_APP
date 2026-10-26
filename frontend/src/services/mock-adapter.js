@@ -1,18 +1,26 @@
 /**
- * Separated Mock API Adapter for Local Offline UI Development
+ * Separated Development Fixture Adapter for Offline / Local UI Prototyping
  * 
  * RULES:
  * 1. Strictly disabled in production.
- * 2. Only active when VITE_USE_MOCK_API=true is set in development.
- * 3. Never confuses mock data with real production records.
+ * 2. Only active when VITE_USE_MOCK_API=true is explicitly set in development.
+ * 3. Never makes mock data look like real persisted records (all records tagged with _is_dev_fixture).
  */
 
 import { DEMO_GOALS, DEMO_TASKS, DEMO_STATS } from './fixtures.js';
 
 export class MockApiAdapter {
   constructor() {
-    this.goals = [...DEMO_GOALS];
-    this.tasks = [...DEMO_TASKS];
+    this.goals = DEMO_GOALS.map((g) => ({
+      ...g,
+      _is_dev_fixture: true,
+      title: `[DEV_FIXTURE] ${g.title}`,
+    }));
+    this.tasks = DEMO_TASKS.map((t) => ({
+      ...t,
+      _is_dev_fixture: true,
+      title: `[DEV_FIXTURE] ${t.title}`,
+    }));
   }
 
   async handle(method, endpoint, { params = {}, body = null } = {}) {
@@ -20,17 +28,23 @@ export class MockApiAdapter {
     await new Promise((r) => setTimeout(r, 60));
 
     const cleanEndpoint = endpoint.replace(/^\/+/, '');
-    const meta = { request_id: `mock-${Date.now()}`, timestamp: new Date().toISOString() };
+    const meta = {
+      request_id: `dev-fixture-${Date.now()}`,
+      timestamp: new Date().toISOString(),
+      is_dev_fixture: true,
+      notice: '[DEV_FIXTURE_ADAPTER: Explicit offline development fixture]',
+    };
 
     // GET /me
     if (cleanEndpoint === 'me') {
       return {
         success: true,
         data: {
-          uid: 'mock-dev-user-001',
+          uid: 'dev-fixture-user-001',
           email: 'developer@lifegoals.ai',
           email_verified: true,
-          display_name: 'Dev User',
+          display_name: '[DEV_FIXTURE] Local Developer',
+          _is_dev_fixture: true,
         },
         meta,
       };
@@ -42,9 +56,11 @@ export class MockApiAdapter {
         success: true,
         data: {
           items: this.goals,
-          total_count: this.goals.length,
+          total: this.goals.length,
           page: 1,
           limit: 20,
+          total_pages: 1,
+          _is_dev_fixture: true,
         },
         meta,
       };
@@ -53,10 +69,11 @@ export class MockApiAdapter {
     // POST /goals
     if (cleanEndpoint === 'goals' && method === 'POST') {
       const newGoal = {
-        id: `mock-goal-${Date.now()}`,
+        id: `dev-fixture-goal-${Date.now()}`,
         ...body,
+        _is_dev_fixture: true,
         progress_percentage: 0,
-        current_value: 0,
+        current_value: body?.current_value || 0,
       };
       this.goals.unshift(newGoal);
       return { success: true, data: newGoal, meta };
@@ -68,9 +85,11 @@ export class MockApiAdapter {
         success: true,
         data: {
           items: this.tasks,
-          total_count: this.tasks.length,
+          total: this.tasks.length,
           page: 1,
           limit: 50,
+          total_pages: 1,
+          _is_dev_fixture: true,
         },
         meta,
       };
@@ -79,9 +98,10 @@ export class MockApiAdapter {
     // POST /tasks
     if (cleanEndpoint === 'tasks' && method === 'POST') {
       const newTask = {
-        id: `mock-task-${Date.now()}`,
+        id: `dev-fixture-task-${Date.now()}`,
         ...body,
-        status: 'pending',
+        _is_dev_fixture: true,
+        status: body?.status || 'pending',
       };
       this.tasks.unshift(newTask);
       return { success: true, data: newTask, meta };
@@ -96,6 +116,7 @@ export class MockApiAdapter {
           completion_rate: DEMO_STATS.dailyCompletionRate,
           total_due: DEMO_STATS.tasksDueToday,
           completed: DEMO_STATS.tasksCompleted,
+          _is_dev_fixture: true,
         },
         meta,
       };
