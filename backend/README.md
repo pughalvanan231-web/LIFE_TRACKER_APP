@@ -151,7 +151,7 @@ The Google Cloud Firestore and Firebase Admin SDKs will automatically route all 
 
 ## 🧪 Testing and Quality Assurance
 
-Run all 64 automated tests (covering authentication, data isolation, parent validation, pagination, transactions, security, goals/milestones, task management, daily planning lifecycles, daily reviews, weighted milestone progress, and deterministic reporting):
+Run all 76 automated tests (covering authentication, data isolation, parent validation, pagination, transactions, security, goals/milestones, task management, daily planning lifecycles, daily reviews, weighted milestone progress, deterministic reporting, and secure provider-independent AI orchestration):
 ```powershell
 $env:PYTHONPATH="backend"
 backend\.venv\Scripts\pytest -v backend/tests
@@ -179,6 +179,7 @@ The server will start at `http://127.0.0.1:5000`.
 - Goals & Milestones API Contract: [`docs/goals_milestones_api.md`](file:///d:/projects/life_tracker_app/backend/docs/goals_milestones_api.md)
 - Tasks & Daily Planning API Contract: [`docs/tasks_daily_planning_api.md`](file:///d:/projects/life_tracker_app/backend/docs/tasks_daily_planning_api.md)
 - Daily Review, Progress & Reporting API Contract: [`docs/daily_review_progress_reporting_api.md`](file:///d:/projects/life_tracker_app/backend/docs/daily_review_progress_reporting_api.md)
+- AI Service Architecture & Contract: [`docs/ai_service.md`](file:///d:/projects/life_tracker_app/backend/docs/ai_service.md)
 
 | Method | Endpoint | Auth | Description |
 | :--- | :--- | :--- | :--- |
@@ -219,5 +220,10 @@ The server will start at `http://127.0.0.1:5000`.
 | `GET` | `/api/v1/reports/weekly` | **Yes** | Weekly performance report with daily breakdown |
 | `GET` | `/api/v1/reports/monthly` | **Yes** | Monthly performance report with daily breakdown |
 | `GET` | `/api/v1/reports/custom` | **Yes** | Custom date-range performance report (`start_date`, `end_date`) |
+| `POST`| `/api/v1/ai/daily-suggestions` | **Yes** | Generate bounded daily task suggestions with deduplication & goal linkage |
+| `POST`| `/api/v1/ai/revised-schedules` | **Yes** | Generate revised schedules proposing task shifts requiring confirmation |
+| `POST`| `/api/v1/ai/recovery-plans` | **Yes** | Recovery mode triage, prioritization, backlog decomposition & catch-up plan |
+| `POST`| `/api/v1/ai/explain-progress` | **Yes** | Qualitative goal progress explanation, strengths, bottlenecks, next actions |
+| `POST`| `/api/v1/ai/task-breakdown` | **Yes** | Decompose large or complex tasks into 2-10 actionable subtasks |
 | `POST`| `/api/v1/ai/quota-check` | No | Sample AI route protected by `@ai_usage_limit` |
 

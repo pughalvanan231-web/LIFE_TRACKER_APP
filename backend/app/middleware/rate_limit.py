@@ -1,6 +1,6 @@
 from functools import wraps
 from typing import Callable, Optional
-from flask import current_app, request
+from flask import current_app, g, request
 
 from app.exceptions import RateLimitExceededError
 from app.services.rate_limiter import rate_limiter
@@ -14,8 +14,7 @@ def _get_client_identifier() -> str:
     else:
         client_ip = request.remote_addr or "127.0.0.1"
 
-    # In future phases with auth, we can append authenticated user ID here
-    user_id = getattr(request, "user_id", None)
+    user_id = getattr(g, "user_id", None) or getattr(request, "user_id", None)
     return f"user:{user_id}" if user_id else f"ip:{client_ip}"
 
 

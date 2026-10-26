@@ -55,6 +55,17 @@ class BaseConfig:
     )
     AI_TIMEOUT_SECONDS: float = float(os.getenv("AI_TIMEOUT_SECONDS", "30.0"))
 
+    # AI Provider & Model Configuration
+    AI_PROVIDER: str = os.getenv("AI_PROVIDER", "gemini").lower()
+    GEMINI_API_KEY: str | None = os.getenv("GEMINI_API_KEY")
+    GEMINI_MODEL: str = os.getenv("GEMINI_MODEL", "gemini-1.5-flash")
+    AI_MAX_SUGGESTIONS_PER_REQUEST: int = int(
+        os.getenv("AI_MAX_SUGGESTIONS_PER_REQUEST", "10")
+    )
+    AI_MAX_INPUT_PROMPT_LENGTH: int = int(
+        os.getenv("AI_MAX_INPUT_PROMPT_LENGTH", "2000")
+    )
+
     # Health & Readiness behavior
     HEALTH_REQUIRE_FIREBASE: bool = os.getenv(
         "HEALTH_REQUIRE_FIREBASE", "false"
@@ -104,28 +115,35 @@ class BaseConfig:
             raise ConfigurationError("AI_TIMEOUT_SECONDS must be positive.")
 
 
+@dataclass
 class DevelopmentConfig(BaseConfig):
     """Configuration for local development."""
 
+    ENV: str = "development"
     DEBUG: bool = True
     TESTING: bool = False
     LOG_LEVEL: str = os.getenv("LOG_LEVEL", "DEBUG")
 
 
+@dataclass
 class TestingConfig(BaseConfig):
     """Configuration for automated test execution."""
 
+    ENV: str = "testing"
     DEBUG: bool = False
     TESTING: bool = True
     LOG_LEVEL: str = "WARNING"
     SECRET_KEY: str = "test-secret-key-life-goals-ai-testing"
     CORS_ALLOWED_ORIGINS_RAW: str = "http://localhost:5173,http://testclient.local"
     HEALTH_REQUIRE_FIREBASE: bool = False
+    AI_PROVIDER: str = "mock"
 
 
+@dataclass
 class ProductionConfig(BaseConfig):
     """Configuration for production deployment with strict security enforcement."""
 
+    ENV: str = "production"
     DEBUG: bool = False
     TESTING: bool = False
     LOG_LEVEL: str = os.getenv("LOG_LEVEL", "INFO")

@@ -1,3 +1,16 @@
+from app.schemas.ai import (
+    DailyTaskSuggestionsRequest,
+    DailyTaskSuggestionsResponse,
+    ExplainGoalProgressRequest,
+    ExplainGoalProgressResponse,
+    RecoveryPlanRequest,
+    RecoveryPlanResponse,
+    RevisedScheduleRequest,
+    RevisedScheduleResponse,
+    TaskBreakdownRequest,
+    TaskBreakdownResponse,
+    TaskSuggestionItem,
+)
 from app.schemas.auth import AuthenticatedUser, SafeUserProfile
 from app.schemas.common import (
     AppBaseModel,
@@ -91,4 +104,15 @@ __all__ = [
     "TaskSnapshotItem",
     "ProgressSnapshotResponse",
     "PaginatedListResponse",
+    "TaskSuggestionItem",
+    "DailyTaskSuggestionsRequest",
+    "DailyTaskSuggestionsResponse",
+    "RevisedScheduleRequest",
+    "RevisedScheduleResponse",
+    "RecoveryPlanRequest",
+    "RecoveryPlanResponse",
+    "ExplainGoalProgressRequest",
+    "ExplainGoalProgressResponse",
+    "TaskBreakdownRequest",
+    "TaskBreakdownResponse",
 ]

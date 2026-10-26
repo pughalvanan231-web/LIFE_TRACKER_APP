@@ -91,3 +91,16 @@ class ServiceUnavailableError(AppException):
     status_code = 503
     code = "SERVICE_UNAVAILABLE"
     message = "A dependent service is currently unavailable."
+
+
+class BadGatewayError(AppException):
+    status_code = 502
+    code = "BAD_GATEWAY"
+    message = "An upstream provider returned an invalid or malformed response."
+
+
+class GatewayTimeoutError(AppException):
+    status_code = 504
+    code = "GATEWAY_TIMEOUT"
+    message = "An upstream provider timed out before completing the request."
+
