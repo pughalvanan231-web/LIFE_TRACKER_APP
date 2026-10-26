@@ -8,9 +8,13 @@ import { VALID_ROUTES } from '../src/services/router.js';
 import { DEMO_GOALS, DEMO_TASKS, DEMO_STATS } from '../src/services/fixtures.js';
 import { formatDate, formatPercent, formatDuration } from '../src/utils/formatters.js';
 
-test('Router valid routes include all required application sections', () => {
-  const expected = ['home', 'goals', 'tasks', 'progress', 'reports', 'settings'];
-  assert.deepEqual(VALID_ROUTES, expected);
+test('Router valid routes include all required application sections and auth routes', () => {
+  const expectedWorkspace = ['home', 'goals', 'tasks', 'progress', 'reports', 'settings', 'profile'];
+  const expectedAuth = ['sign-in', 'sign-up', 'reset-password'];
+
+  for (const route of [...expectedWorkspace, ...expectedAuth]) {
+    assert.ok(VALID_ROUTES.includes(route), `Route ${route} should be in VALID_ROUTES`);
+  }
 });
 
 test('Formatters correctly calculate and format numbers, dates, and durations', () => {

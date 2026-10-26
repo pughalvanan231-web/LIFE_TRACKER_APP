@@ -9,10 +9,12 @@ const ROUTE_TITLES = {
   progress: { title: 'Daily Review & Progress', subtitle: 'Reflection, habit consistency, and completion tracking' },
   reports: { title: 'Reports & Analytics', subtitle: 'Historical performance breakdowns and trends' },
   settings: { title: 'Settings', subtitle: 'Preferences, time zones, and notifications' },
+  profile: { title: 'Account & Profile', subtitle: 'Identity, security, and verified session claims' },
 };
 
-export function renderHeader(currentRoute, demoMode) {
+export function renderHeader(currentRoute, demoMode, user) {
   const meta = ROUTE_TITLES[currentRoute] || ROUTE_TITLES.home;
+  const initials = user?.displayName ? user.displayName.substring(0, 2).toUpperCase() : 'LG';
 
   return `
     <header class="app-header">
@@ -41,11 +43,11 @@ export function renderHeader(currentRoute, demoMode) {
         </button>
 
         <!-- User Profile Avatar Pill -->
-        <div class="flex items-center gap-2" style="padding-left: var(--space-2); border-left: 1px solid var(--color-border-subtle);">
-          <div style="width: 32px; height: 32px; border-radius: var(--radius-full); background: var(--color-surface-hover); border: 1.5px solid var(--color-border-medium); display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; color: var(--color-primary-700);">
-            LG
+        <a href="#/profile" class="flex items-center gap-2" style="padding-left: var(--space-2); border-left: 1px solid var(--color-border-subtle);" title="Account Profile">
+          <div style="width: 34px; height: 34px; border-radius: var(--radius-full); background: var(--color-primary-50); border: 1.5px solid var(--color-primary-200); display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; color: var(--color-primary-700); transition: transform var(--transition-fast);">
+            ${initials}
           </div>
-        </div>
+        </a>
       </div>
     </header>
   `;

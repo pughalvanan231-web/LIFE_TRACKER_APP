@@ -56,13 +56,27 @@ frontend/
 │   │   ├── reports.js       # Periodic performance analytics & breakdowns
 │   │   └── settings.js      # Time zone, notification & theme settings
 │   ├── services/
+│   │   ├── auth-service.js  # Official modular Firebase Auth integration & token provider
 │   │   ├── api-client.js    # Shared fetch wrapper with timeout & correlation IDs
 │   │   ├── api-error.js     # Standardized ApiError class & user-friendly messages
 │   │   ├── config.js        # Environment configuration resolver
 │   │   ├── mock-adapter.js  # Separated mock API adapter for offline dev
-│   │   ├── router.js        # Client-side hash router (#/home, #/goals, etc.)
+│   │   ├── router.js        # Client-side hash router with authentication route guards
 │   │   ├── state.js         # Centralized pub/sub state manager
 │   │   └── fixtures.js      # Development demo fixtures for UI preview
+│   ├── pages/               # Application view controllers
+│   │   ├── auth/            # Dedicated authentication views
+│   │   │   ├── auth-card-layout.js # Centered mindful branding layout
+│   │   │   ├── sign-in.js   # Sign-in form with validation & show/hide password
+│   │   │   ├── sign-up.js   # Registration form with password requirements
+│   │   │   └── reset-password.js # Password reset request & confirmation
+│   │   ├── home.js          # Main dashboard with metrics and focus tasks
+│   │   ├── goals.js         # Goals & Milestones list with progress tracks
+│   │   ├── tasks.js         # Daily task scheduling & status filters
+│   │   ├── progress.js      # Evening review submission & progress formulas
+│   │   ├── reports.js       # Periodic performance analytics & breakdowns
+│   │   ├── settings.js      # Time zone, notification & theme settings
+│   │   └── profile.js       # User identity claims, backend verification & sign-out
 │   ├── styles/
 │   │   ├── tokens.css       # Design tokens (colors, typography, spacing)
 │   │   ├── global.css       # Resets, utilities, sticky note styling
@@ -74,8 +88,43 @@ frontend/
 │       └── formatters.js    # Date, percentage, duration formatters
 └── tests/
     ├── api-client.test.js   # API client, error mapping, timeout & header tests
+    ├── auth.test.js         # Firebase Auth service, error mapping & lifecycle tests
     └── basic.test.js        # Router, formatters, and fixtures tests
 ```
+
+---
+
+## 🔐 Firebase Authentication & Security Architecture
+
+Life Goals AI uses official modular **Firebase Authentication** client SDK for client identity and session management, while the Flask backend verifies tokens via Firebase Admin SDK.
+
+### 1. Required Client Configuration (`.env.local`)
+Copy `frontend/.env.example` to `frontend/.env.local`:
+```bash
+cp frontend/.env.example frontend/.env.local
+```
+
+Populate the client-safe public Firebase configuration:
+```env
+VITE_FIREBASE_API_KEY=AIzaSy...
+VITE_FIREBASE_AUTH_DOMAIN=your-project.firebaseapp.com
+VITE_FIREBASE_PROJECT_ID=your-project
+VITE_FIREBASE_STORAGE_BUCKET=your-project.appspot.com
+VITE_FIREBASE_MESSAGING_SENDER_ID=123456789012
+VITE_FIREBASE_APP_ID=1:123456789012:web:abcdef1234567890
+
+# Optional: Local Firebase Auth Emulator Host for development
+# VITE_FIREBASE_AUTH_EMULATOR_HOST=http://127.0.0.1:9099
+```
+
+### 2. Client Authentication Lifecycle
+1. **Zero Secret Exposure:** Only client-safe public configuration is exposed in the frontend bundle. No service accounts or server secrets are ever placed in frontend files.
+2. **Cryptographic ID Token Handshake:** On user sign-in, Firebase Auth mints a signed JWT ID token. The `AuthService` injects this token into `ApiClient`, which transmits it in the `Authorization: Bearer <ID_TOKEN>` header for all protected backend requests.
+3. **Backend Profile Verification:** After successful sign-in, the client queries `GET /api/v1/me` to verify backend authorization and display account data.
+4. **Navigation Route Guards:**
+   - Unauthenticated users attempting to access protected routes (`#/home`, `#/goals`, `#/tasks`, etc.) are automatically redirected to `#/sign-in`.
+   - Authenticated users navigating to `#/sign-in` or `#/sign-up` are automatically redirected to `#/home`.
+   - Signing out revokes client tokens, clears user claims, and safely returns to `#/sign-in`.
 
 ---
 
@@ -109,6 +158,7 @@ cp .env.example .env.local
 | `429` | `RATE_LIMIT_EXCEEDED` | Displays `Retry-After` seconds countdown | **Yes** |
 | `500+`| `INTERNAL_SERVER_ERROR` | Friendly error notice + request reference ID | **Yes** |
 | `Timeout`| `REQUEST_TIMEOUT` | Network timeout notice | **Yes** |
+
 
 ---
 

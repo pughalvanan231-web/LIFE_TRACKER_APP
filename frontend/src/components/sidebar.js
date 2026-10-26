@@ -2,7 +2,7 @@
  * Desktop Sidebar Navigation Component
  */
 
-export function renderSidebar(currentRoute) {
+export function renderSidebar(currentRoute, user) {
   const navItems = [
     {
       route: 'home',
@@ -34,7 +34,14 @@ export function renderSidebar(currentRoute) {
       label: 'Settings',
       icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="nav-icon"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>`,
     },
+    {
+      route: 'profile',
+      label: 'Account',
+      icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="nav-icon"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>`,
+    },
   ];
+
+  const displayName = user?.displayName || user?.email?.split('@')[0] || 'Authenticated User';
 
   return `
     <aside class="app-sidebar" id="app-sidebar" aria-label="Main Navigation">
@@ -65,10 +72,15 @@ export function renderSidebar(currentRoute) {
       </nav>
 
       <div class="sidebar-footer">
-        <div class="flex items-center justify-between text-xs text-muted">
-          <span>v1.0.0 Foundation</span>
-          <span class="badge badge-neutral">Client Ready</span>
-        </div>
+        <a href="#/profile" class="flex items-center justify-between" style="color: inherit; text-decoration: none;" title="View Account Profile">
+          <div class="flex items-center gap-2 overflow-hidden" style="max-width: 170px;">
+            <div style="width: 26px; height: 26px; border-radius: var(--radius-full); background: var(--color-primary-100); color: var(--color-primary-700); font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+              ${displayName.charAt(0).toUpperCase()}
+            </div>
+            <span class="text-xs font-semibold" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${displayName}</span>
+          </div>
+          <span class="badge badge-success text-xs" style="padding: 1px 6px; font-size: 10px;">Active</span>
+        </a>
       </div>
     </aside>
   `;

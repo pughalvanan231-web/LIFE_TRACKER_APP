@@ -33,10 +33,51 @@ function resolveUseMockApi() {
   return false;
 }
 
+// Resolve Firebase Client SDK configuration
+function resolveFirebaseConfig() {
+  if (typeof import.meta === 'undefined' || !import.meta.env) {
+    return null;
+  }
+
+  const env = import.meta.env;
+  const config = {
+    apiKey: env.VITE_FIREBASE_API_KEY || '',
+    authDomain: env.VITE_FIREBASE_AUTH_DOMAIN || '',
+    projectId: env.VITE_FIREBASE_PROJECT_ID || '',
+    storageBucket: env.VITE_FIREBASE_STORAGE_BUCKET || '',
+    messagingSenderId: env.VITE_FIREBASE_MESSAGING_SENDER_ID || '',
+    appId: env.VITE_FIREBASE_APP_ID || '',
+  };
+
+  return config;
+}
+
+// Check if Firebase configuration is complete and not a placeholder
+function checkIsFirebaseConfigured(config) {
+  if (!config) return false;
+  const { apiKey, projectId } = config;
+  if (!apiKey || !projectId) return false;
+  // Guard against placeholders
+  if (apiKey.includes('Placeholder') || projectId.includes('your-project-id')) {
+    return false;
+  }
+  return true;
+}
+
+const firebaseConfig = resolveFirebaseConfig();
+const isFirebaseConfigured = checkIsFirebaseConfigured(firebaseConfig);
+const authEmulatorHost =
+  typeof import.meta !== 'undefined' && import.meta.env
+    ? import.meta.env.VITE_FIREBASE_AUTH_EMULATOR_HOST || null
+    : null;
+
 export const appConfig = {
   apiBaseUrl: resolveApiBaseUrl(),
   apiTimeoutMs: resolveTimeoutMs(),
   useMockApi: resolveUseMockApi(),
+  firebase: firebaseConfig,
+  isFirebaseConfigured,
+  authEmulatorHost,
   isProd,
   isDev,
 };

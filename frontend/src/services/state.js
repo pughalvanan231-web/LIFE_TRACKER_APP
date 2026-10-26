@@ -13,6 +13,12 @@ class AppStateManager {
       notifications: [],
       modal: null,
       theme: 'light',
+      isAuthenticated: false,
+      authLoading: true,
+      user: null,
+      backendUser: null,
+      isFirebaseConfigured: true,
+      authError: null,
     };
   }
 
