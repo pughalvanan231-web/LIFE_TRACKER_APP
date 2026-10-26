@@ -1,10 +1,11 @@
 from unittest.mock import patch
+
 import pytest
 
+from app.integrations.notification_provider import MockNotificationProvider
 from app.schemas.goal import GoalCategory, GoalPriority, GoalTimeframe
 from app.schemas.task import TaskPriority
 from app.services.notification_service import NotificationService
-from app.integrations.notification_provider import MockNotificationProvider
 from tests.test_data_layer import MockFirestoreClient
 
 
@@ -203,7 +204,7 @@ def test_midnight_closing_respects_user_timezones(client, test_db):
     At UTC 2026-10-26T16:00:00Z:
     - Tokyo (UTC+9) is at 2026-10-27T01:00:00 (has crossed midnight for 2026-10-26).
     - New York (UTC-4) is at 2026-10-26T12:00:00 (mid-day, 2026-10-26 has NOT ended).
-    
+
     Verifies that Tokyo's day 2026-10-26 closes, while New York's 2026-10-26 remains open!
     """
     tokyo_uid = "user_tokyo_001"

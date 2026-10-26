@@ -151,7 +151,7 @@ The Google Cloud Firestore and Firebase Admin SDKs will automatically route all 
 
 ## 🧪 Testing and Quality Assurance
 
-Run all 85 automated tests (covering authentication, data isolation, parent validation, pagination, transactions, security, goals/milestones, task management, daily planning lifecycles, daily reviews, weighted milestone progress, deterministic reporting, secure AI orchestration, and timezone-aware idempotent scheduled backend jobs):
+Run all 92 automated tests (covering authentication, cross-user isolation, parent validation, pagination, transactions, security, goals/milestones, task management, daily planning lifecycles, daily reviews, weighted milestone progress, deterministic reporting, secure AI orchestration, timezone-aware scheduled jobs, database outages, and hardening audits):
 ```powershell
 $env:PYTHONPATH="backend"
 backend\.venv\Scripts\pytest -v backend/tests
@@ -176,6 +176,7 @@ The server will start at `http://127.0.0.1:5000`.
 
 ## 📡 API Endpoints Summary
 
+- Production Release Audit & Hardening Report: [`docs/production_release_audit.md`](file:///d:/projects/life_tracker_app/backend/docs/production_release_audit.md)
 - Goals & Milestones API Contract: [`docs/goals_milestones_api.md`](file:///d:/projects/life_tracker_app/backend/docs/goals_milestones_api.md)
 - Tasks & Daily Planning API Contract: [`docs/tasks_daily_planning_api.md`](file:///d:/projects/life_tracker_app/backend/docs/tasks_daily_planning_api.md)
 - Daily Review, Progress & Reporting API Contract: [`docs/daily_review_progress_reporting_api.md`](file:///d:/projects/life_tracker_app/backend/docs/daily_review_progress_reporting_api.md)

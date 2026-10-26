@@ -1,6 +1,8 @@
 from datetime import datetime
 from typing import List, Optional
+
 from pydantic import Field
+
 from app.schemas.common import AppBaseModel
 from app.schemas.goal import DateHistoryEntry
 

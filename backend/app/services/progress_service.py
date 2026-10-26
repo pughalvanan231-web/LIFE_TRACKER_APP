@@ -1,4 +1,5 @@
-from datetime import date as dt_date, datetime, timedelta, timezone
+from datetime import date as dt_date
+from datetime import datetime, timedelta, timezone
 from typing import Any, Dict, List, Optional, Tuple
 from zoneinfo import ZoneInfo
 
@@ -86,10 +87,10 @@ class ProgressService:
     ) -> Tuple[int, int, int, int, int, float, bool]:
         """
         Shared core calculation engine for daily progress and multi-day reports.
-        
+
         FORMULA:
           Daily completion % = (completed tasks due that day / all tasks due that day) * 100
-        
+
         RULES:
           - Unverified tasks are NEVER counted as completed.
           - Postponed/rescheduled tasks are tracked separately.
@@ -133,7 +134,7 @@ class ProgressService:
     def record_daily_review(self, uid: str, req: DailyReviewCreateRequest) -> DailyReviewResponse:
         """
         Submit or correct a daily review for a specific calendar date.
-        
+
         Requirements:
         1. Preserve completed tasks.
         2. Preserve explicitly not-completed tasks.

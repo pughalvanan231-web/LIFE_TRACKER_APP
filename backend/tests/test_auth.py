@@ -1,6 +1,7 @@
 from unittest.mock import patch
-from flask.testing import FlaskClient
+
 from firebase_admin import auth as firebase_auth
+from flask.testing import FlaskClient
 
 
 def test_missing_auth_header_returns_401(client: FlaskClient):

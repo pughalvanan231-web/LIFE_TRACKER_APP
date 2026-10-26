@@ -11,6 +11,7 @@ SECURITY RULES:
 
 from functools import wraps
 from typing import Callable, Optional
+
 from flask import g, request
 
 from app.exceptions import ForbiddenError, UnauthorizedError
@@ -21,7 +22,7 @@ from app.schemas.auth import AuthenticatedUser
 def extract_bearer_token(auth_header: Optional[str]) -> str:
     """
     Extract and validate Bearer token from HTTP Authorization header.
-    
+
     Raises:
         UnauthorizedError: If header is missing, malformed, or empty.
     """
@@ -77,7 +78,7 @@ def require_ownership(user_id_param: str = "user_id") -> Callable:
     """
     Authorization decorator ensuring that the authenticated user strictly owns
     the resource identified in the route's URL parameters.
-    
+
     Prevents authenticated User A from accessing User B's resources.
     """
 

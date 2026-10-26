@@ -2,6 +2,7 @@ import logging
 import uuid
 from datetime import datetime, timezone
 from typing import Any, Optional
+
 from google.api_core.exceptions import GoogleAPIError
 
 from app.exceptions import ServiceUnavailableError

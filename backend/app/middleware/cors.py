@@ -10,7 +10,9 @@ clients can bypass CORS entirely. All sensitive operations MUST verify authentic
 """
 
 from typing import Set
+
 from flask import Flask, Response, current_app, request
+
 from app.utils.responses import error_response
 
 

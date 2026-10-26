@@ -1,5 +1,6 @@
 from functools import wraps
 from typing import Callable, Optional
+
 from flask import current_app, g, request
 
 from app.exceptions import RateLimitExceededError

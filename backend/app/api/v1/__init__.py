@@ -52,7 +52,7 @@ def api_info():
 def get_my_profile():
     """
     Retrieve authenticated user profile information.
-    
+
     SECURITY: The UID is derived exclusively from the verified Firebase token claims.
     Any UID parameters supplied in query string or body are ignored.
     """

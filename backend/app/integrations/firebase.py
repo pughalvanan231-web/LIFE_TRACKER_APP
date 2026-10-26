@@ -1,5 +1,6 @@
 import logging
 from typing import Any, Dict, Optional
+
 from app.extensions import firebase
 
 logger = logging.getLogger("app.integrations.firebase")

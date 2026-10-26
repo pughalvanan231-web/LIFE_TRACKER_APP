@@ -12,7 +12,6 @@ from app.schemas.ai import (
     TaskSuggestionItem,
 )
 from app.schemas.auth import AuthenticatedUser, SafeUserProfile
-from app.schemas.job import JobExecutionRequest, JobExecutionResponse
 from app.schemas.common import (
     AppBaseModel,
     ErrorDetail,
@@ -32,6 +31,7 @@ from app.schemas.goal import (
     GoalTimeframe,
     GoalUpdateRequest,
 )
+from app.schemas.job import JobExecutionRequest, JobExecutionResponse
 from app.schemas.milestone import (
     MilestoneCreateRequest,
     MilestoneResponse,

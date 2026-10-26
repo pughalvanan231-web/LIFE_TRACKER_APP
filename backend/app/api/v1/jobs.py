@@ -1,4 +1,5 @@
 import logging
+
 from flask import Blueprint, request
 
 from app.middleware.job_auth import require_job_auth
@@ -22,7 +23,7 @@ def run_all_jobs():
     3. Overdue goals and milestones detection and alerts.
     4. Scheduled weekly performance summaries.
     5. Bounded user pagination and safe dry-run simulation mode.
-    
+
     SECURITY: Restricted to Google Cloud Scheduler OIDC or authenticated Job Secret.
     """
     payload = request.get_json(silent=True) or {}

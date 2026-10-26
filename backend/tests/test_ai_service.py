@@ -1,4 +1,5 @@
 from unittest.mock import patch
+
 import pytest
 
 from app.integrations.ai_provider import GeminiProvider, MockAIProvider

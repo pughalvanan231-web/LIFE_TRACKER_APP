@@ -1,6 +1,10 @@
 import logging
 from typing import Any, Dict, List, Optional
-from app.integrations.notification_provider import BaseNotificationProvider, get_notification_provider
+
+from app.integrations.notification_provider import (
+    BaseNotificationProvider,
+    get_notification_provider,
+)
 from app.repositories.firestore_base import BaseFirestoreRepository
 from app.repositories.user_repository import UserRepository
 
@@ -42,7 +46,7 @@ class NotificationService(BaseFirestoreRepository):
     ) -> bool:
         """
         Send a notification if eligible and not previously sent for idempotency_key.
-        
+
         Guarantees:
         1. Checks user preferences (skips if notifications_enabled is False).
         2. Checks sentNotifications to guarantee no duplicates.

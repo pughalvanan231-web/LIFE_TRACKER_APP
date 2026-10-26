@@ -1,4 +1,5 @@
 from flask import Blueprint, current_app
+
 from app.extensions import firebase
 from app.utils.responses import error_response, success_response
 

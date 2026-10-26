@@ -1,11 +1,3 @@
-from app.middleware.auth import (
-    extract_bearer_token,
-    get_current_user,
-    require_auth,
-    require_ownership,
-    verify_resource_ownership,
-)
-from app.middleware.cors import register_cors_middleware
 from app.exceptions import (
     AppException,
     BadRequestError,
@@ -18,6 +10,14 @@ from app.exceptions import (
     UnauthorizedError,
     UnsupportedMediaTypeError,
 )
+from app.middleware.auth import (
+    extract_bearer_token,
+    get_current_user,
+    require_auth,
+    require_ownership,
+    verify_resource_ownership,
+)
+from app.middleware.cors import register_cors_middleware
 from app.middleware.error_handler import register_error_handlers
 from app.middleware.logging import configure_logging
 from app.middleware.rate_limit import ai_usage_limit, rate_limit

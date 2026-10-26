@@ -31,7 +31,7 @@ logger = logging.getLogger("app.services.ai")
 class AIService:
     """
     Secure, provider-independent AI orchestration service.
-    
+
     SECURITY GUARANTEES:
     1. Operates strictly within verified user-scoped boundaries (`uid`).
     2. Treats user-provided text as untrusted commentary (prompt isolation).

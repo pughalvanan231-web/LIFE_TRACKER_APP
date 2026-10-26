@@ -17,7 +17,7 @@ class BaseRateLimiter(ABC):
     ) -> Tuple[bool, int, int]:
         """
         Check if an operation identified by `key` is allowed within the window.
-        
+
         Returns:
             Tuple of (is_allowed: bool, remaining_requests: int, retry_after_seconds: int)
         """

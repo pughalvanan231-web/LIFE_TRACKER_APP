@@ -1,4 +1,5 @@
 import logging
+
 from flask import Blueprint, g, request
 
 from app.middleware.auth import require_auth

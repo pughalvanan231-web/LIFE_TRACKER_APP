@@ -1,6 +1,7 @@
 import logging
 import os
 from typing import Any, Dict, Optional
+
 from flask import Flask
 
 from app.exceptions import ServiceUnavailableError, UnauthorizedError
@@ -73,7 +74,7 @@ class FirebaseExtension:
     def verify_token(self, id_token: str, check_revoked: bool = False) -> Dict[str, Any]:
         """
         Verify a Firebase ID token using the Firebase Admin SDK.
-        
+
         Raises:
             UnauthorizedError: if the token is expired, revoked, or invalid.
             ServiceUnavailableError: if Firebase Admin is uninitialized or keys are unreachable.

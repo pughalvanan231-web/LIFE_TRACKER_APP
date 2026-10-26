@@ -39,7 +39,7 @@ def create_goal():
 def list_goals():
     """
     List user goals with filtering, sorting, and pagination.
-    
+
     Query Params:
         status: active, completed, paused, archived
         category: career, health, finance, etc.

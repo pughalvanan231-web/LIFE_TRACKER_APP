@@ -2,6 +2,7 @@ import json
 import logging
 from abc import ABC, abstractmethod
 from typing import Any, Dict, Optional, Type
+
 from flask import current_app
 from pydantic import BaseModel, ValidationError
 
@@ -41,10 +42,10 @@ class BaseAIProvider(ABC):
     ) -> Dict[str, Any]:
         """
         Generate structured output complying with the provided Pydantic schema.
-        
+
         Returns:
             Dict[str, Any]: Validated structured data dictionary.
-            
+
         Raises:
             ServiceUnavailableError: If credentials or upstream are unavailable.
             GatewayTimeoutError: If the upstream provider times out.

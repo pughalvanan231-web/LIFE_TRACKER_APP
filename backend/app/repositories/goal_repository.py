@@ -1,4 +1,5 @@
 from typing import Any, Dict, List, Optional, Tuple
+
 from app.repositories.firestore_base import BaseFirestoreRepository
 
 

@@ -108,6 +108,15 @@ class BaseConfig:
     HOST: str = os.getenv("HOST", "127.0.0.1")
     PORT: int = int(os.getenv("PORT", "5000"))
 
+    def __post_init__(self):
+        """Allow runtime environment variable override when instantiated."""
+        if "SECRET_KEY" in os.environ:
+            self.SECRET_KEY = os.environ["SECRET_KEY"]
+        if "CORS_ALLOWED_ORIGINS" in os.environ:
+            self.CORS_ALLOWED_ORIGINS_RAW = os.environ["CORS_ALLOWED_ORIGINS"]
+        if "FLASK_ENV" in os.environ:
+            self.ENV = os.environ["FLASK_ENV"]
+
     @property
     def cors_allowed_origins(self) -> List[str]:
         """Parsed list of allowed CORS origins."""

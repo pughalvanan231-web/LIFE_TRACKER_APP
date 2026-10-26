@@ -17,7 +17,7 @@ from app.middleware import (
 def create_app(config_name: str | None = None) -> Flask:
     """
     Application factory for Life Goals AI Flask backend.
-    
+
     Initializes:
     - Environment-based typed configuration & security validation
     - Structured, sensitive-data-redacted application logging

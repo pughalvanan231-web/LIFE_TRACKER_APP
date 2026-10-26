@@ -1,4 +1,5 @@
 from typing import Generic, List, TypeVar
+
 from app.schemas.common import AppBaseModel
 
 T = TypeVar("T")

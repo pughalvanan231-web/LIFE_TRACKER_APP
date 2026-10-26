@@ -1,4 +1,5 @@
 from flask import Flask
+
 from app.api.health import health_bp
 from app.api.v1 import api_v1_bp
 

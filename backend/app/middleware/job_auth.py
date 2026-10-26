@@ -2,6 +2,7 @@ import hmac
 import logging
 from functools import wraps
 from typing import Callable, Optional
+
 from flask import current_app, g, request
 
 from app.exceptions import ForbiddenError, UnauthorizedError
@@ -62,7 +63,7 @@ def require_job_auth() -> Callable:
     identities:
     1. Google Cloud Scheduler / Cloud Run OIDC token with least-privilege service account.
     2. Or a cryptographically verified internal JOB_SECRET_KEY header (X-Job-Secret or Bearer).
-    
+
     Rejects unauthorized public access with HTTP 401 / 403.
     """
 
