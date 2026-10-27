@@ -28,6 +28,7 @@ import { renderDailyPlanner } from './tasks/daily-planner.js';
 import { renderTaskCard } from './tasks/task-card.js';
 import { renderTaskFormModal } from './tasks/task-form-modal.js';
 import { renderTaskRescheduleModal } from './tasks/task-reschedule-modal.js';
+import { openAiPlannerModal } from './tasks/ai-planner-modal.js';
 
 class TasksController {
   constructor() {
@@ -512,6 +513,14 @@ export function renderTasksPage() {
             </button>
           </div>
 
+          <!-- AI Assistant CTAs -->
+          <button id="tasks-ai-plan-btn" class="btn btn-outline" style="border-color: var(--color-primary-500); color: var(--color-primary-700);" title="AI Plan My Day">
+            <span>✦ Plan My Day</span>
+          </button>
+          <button id="tasks-ai-recovery-btn" class="btn btn-outline" style="border-color: var(--color-warning-border, #f59e0b); color: var(--color-warning-solid, #d97706);" title="Recovery Mode: Get Back on Track">
+            <span>✦ Recovery Mode</span>
+          </button>
+
           <!-- Schedule New Task Button -->
           <button id="add-task-btn" class="btn btn-primary">
             <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
@@ -657,6 +666,33 @@ export function bindTasksEvents(container) {
   const addTaskEmptyBtn = container.querySelector('#add-task-empty-btn');
   if (addTaskBtn) addTaskBtn.addEventListener('click', () => tasksController.openTaskModal(null));
   if (addTaskEmptyBtn) addTaskEmptyBtn.addEventListener('click', () => tasksController.openTaskModal(null));
+
+  // AI Assistant Buttons
+  const aiPlanBtn = container.querySelector('#tasks-ai-plan-btn');
+  if (aiPlanBtn) {
+    aiPlanBtn.addEventListener('click', () => {
+      openAiPlannerModal({
+        mode: 'plan',
+        defaultDate: tasksController.selectedDate,
+        goals: tasksController.goals,
+        tasks: tasksController.tasks,
+        onTasksSaved: () => tasksController.loadTasks(),
+      });
+    });
+  }
+
+  const aiRecoveryBtn = container.querySelector('#tasks-ai-recovery-btn');
+  if (aiRecoveryBtn) {
+    aiRecoveryBtn.addEventListener('click', () => {
+      openAiPlannerModal({
+        mode: 'recovery',
+        defaultDate: tasksController.selectedDate,
+        goals: tasksController.goals,
+        tasks: tasksController.tasks,
+        onTasksSaved: () => tasksController.loadTasks(),
+      });
+    });
+  }
 
   // 2. View Mode Toggles
   const boardBtn = container.querySelector('#tasks-view-board-btn');

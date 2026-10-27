@@ -20,6 +20,7 @@ import { DEMO_STATS, DEMO_GOALS, DEMO_TASKS } from '../services/fixtures.js';
 import { renderSkeletonCardList } from '../components/loading-skeleton.js';
 import { renderRetryableError } from '../components/retryable-error.js';
 import { formatDate, formatDateDisplay, daysRemaining, formatPriority } from '../utils/formatters.js';
+import { openAiPlannerModal } from './tasks/ai-planner-modal.js';
 
 class DashboardController {
   constructor() {
@@ -226,6 +227,9 @@ class DashboardController {
                   <p class="card-subtitle">Scheduled commitments for ${formatDateDisplay(todayStr)}</p>
                 </div>
                 <div class="flex gap-2">
+                  <button id="home-ai-plan-btn" class="btn btn-outline btn-sm" style="border-color: var(--color-primary-500); color: var(--color-primary-700);" title="AI Plan My Day">
+                    ✦ Plan My Day
+                  </button>
                   <a href="#/tasks" class="btn btn-outline btn-sm">Planner</a>
                   <a href="#/progress" class="btn btn-primary btn-sm">Evening Review</a>
                 </div>
@@ -347,9 +351,16 @@ class DashboardController {
                   <h3 class="card-title">Goals at Risk</h3>
                   <p class="card-subtitle">Items requiring proactive adjustment</p>
                 </div>
-                <span class="badge ${goalsAtRisk.length > 0 ? 'badge-danger' : 'badge-success'}">
-                  ${goalsAtRisk.length > 0 ? `${goalsAtRisk.length} At Risk` : 'Healthy'}
-                </span>
+                <div class="flex items-center gap-2">
+                  ${goalsAtRisk.length > 0 ? `
+                    <button id="home-ai-recovery-btn" class="btn btn-outline btn-sm" style="border-color: var(--color-warning-border, #f59e0b); color: var(--color-warning-solid, #d97706);" title="Recovery Mode: Get Back on Track">
+                      ✦ Recovery Mode
+                    </button>
+                  ` : ''}
+                  <span class="badge ${goalsAtRisk.length > 0 ? 'badge-danger' : 'badge-success'}">
+                    ${goalsAtRisk.length > 0 ? `${goalsAtRisk.length} At Risk` : 'Healthy'}
+                  </span>
+                </div>
               </div>
 
               ${goalsAtRisk.length === 0 ? `
@@ -500,6 +511,31 @@ class DashboardController {
     if (disableDemoBtn) {
       disableDemoBtn.addEventListener('click', () => {
         appState.toggleDemoMode();
+      });
+    }
+
+    // AI Assistant Buttons
+    const aiPlanBtn = this._container.querySelector('#home-ai-plan-btn');
+    if (aiPlanBtn) {
+      aiPlanBtn.addEventListener('click', () => {
+        openAiPlannerModal({
+          mode: 'plan',
+          goals: this.data.goals,
+          tasks: this.data.tasks,
+          onTasksSaved: () => this.loadDashboardData(),
+        });
+      });
+    }
+
+    const aiRecoveryBtn = this._container.querySelector('#home-ai-recovery-btn');
+    if (aiRecoveryBtn) {
+      aiRecoveryBtn.addEventListener('click', () => {
+        openAiPlannerModal({
+          mode: 'recovery',
+          goals: this.data.goals,
+          tasks: this.data.tasks,
+          onTasksSaved: () => this.loadDashboardData(),
+        });
       });
     }
   }
