@@ -169,3 +169,31 @@
     --transition-slow: 0.01ms;
   }
 }
+
+/* ==========================================================================
+   DARK THEME TOKENS - SLEEK OBSIDIAN
+   ========================================================================== */
+[data-theme="dark"] {
+  --color-surface-ground: #0b0f19;
+  --color-surface-card: #131b2e;
+  --color-surface-card-subtle: #0f1626;
+  --color-surface-hover: #1c263d;
+  --color-surface-active: #23304c;
+  --color-surface-raised: #182238;
+  --color-surface-overlay: rgba(0, 0, 0, 0.75);
+
+  --color-text-primary: #f8fafc;
+  --color-text-secondary: #cbd5e1;
+  --color-text-muted: #94a3b8;
+  --color-text-subtle: #64748b;
+  --color-text-inverse: #0b0f19;
+
+  --color-border-subtle: #1e293b;
+  --color-border-medium: #334155;
+  --color-border-strong: #475569;
+  --color-divider: #1e293b;
+
+  --color-primary-50: #1e1b4b;
+  --color-primary-100: #2e287a;
+}
+

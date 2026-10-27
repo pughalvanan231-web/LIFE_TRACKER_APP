@@ -72,7 +72,7 @@ test('Router: Protected navigation gate blocks unauthenticated users from privat
   });
 
   // Verify all protected workspace routes are defined
-  const expectedProtected = ['home', 'goals', 'tasks', 'progress', 'reports', 'settings', 'profile'];
+  const expectedProtected = ['home', 'goals', 'tasks', 'progress', 'reports', 'settings', 'profile', 'focus'];
   assert.deepEqual(PROTECTED_ROUTES, expectedProtected);
 
   // Verify public auth routes are defined

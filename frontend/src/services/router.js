@@ -5,7 +5,7 @@
 import { appState } from './state.js';
 
 export const PUBLIC_AUTH_ROUTES = ['sign-in', 'sign-up', 'reset-password'];
-export const PROTECTED_ROUTES = ['home', 'goals', 'tasks', 'progress', 'reports', 'settings', 'profile'];
+export const PROTECTED_ROUTES = ['home', 'goals', 'tasks', 'progress', 'reports', 'settings', 'profile', 'focus'];
 export const VALID_ROUTES = [...PUBLIC_AUTH_ROUTES, ...PROTECTED_ROUTES];
 
 export class Router {

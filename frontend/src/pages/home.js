@@ -21,6 +21,8 @@ import { renderSkeletonCardList } from '../components/loading-skeleton.js';
 import { renderRetryableError } from '../components/retryable-error.js';
 import { formatDate, formatDateDisplay, daysRemaining, formatPriority } from '../utils/formatters.js';
 import { openAiPlannerModal } from './tasks/ai-planner-modal.js';
+import { renderDailyClosingStatusCard } from '../components/daily-closing-status.js';
+import { DataEvents, DATA_TOPICS } from '../services/data-events.js';
 
 class DashboardController {
   constructor() {
@@ -35,6 +37,14 @@ class DashboardController {
       recentReviews: [],
     };
     this._container = null;
+
+    // Reactively refresh when app is resumed or progress/tasks change
+    DataEvents.on(DATA_TOPICS.PROGRESS_CHANGED, () => {
+      if (!this.isLoading) this.loadDashboardData();
+    });
+    DataEvents.on(DATA_TOPICS.TASKS_CHANGED, () => {
+      if (!this.isLoading) this.loadDashboardData();
+    });
   }
 
   setContainer(container) {
@@ -311,6 +321,14 @@ class DashboardController {
           <!-- RIGHT COLUMN: Deadlines, Delayed Milestones & Goals At Risk -->
           <div class="flex flex-col gap-6">
             
+            <!-- Daily Closing Status Widget -->
+            ${renderDailyClosingStatusCard({
+              review: recentReviews.find((r) => r.date === todayStr) || null,
+              dailyProgress: daily,
+              tasks: todayTasks,
+              timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || 'UTC',
+            })}
+
             <!-- Upcoming Deadlines -->
             <section class="card" aria-label="Upcoming Deadlines">
               <div class="card-header">

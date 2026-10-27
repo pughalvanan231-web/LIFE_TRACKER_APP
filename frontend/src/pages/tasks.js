@@ -29,6 +29,8 @@ import { renderTaskCard } from './tasks/task-card.js';
 import { renderTaskFormModal } from './tasks/task-form-modal.js';
 import { renderTaskRescheduleModal } from './tasks/task-reschedule-modal.js';
 import { openAiPlannerModal } from './tasks/ai-planner-modal.js';
+import { focusController } from './focus.js';
+import { router } from '../services/router.js';
 
 class TasksController {
   constructor() {
@@ -804,4 +806,17 @@ export function bindTasksEvents(container) {
       if (taskId) tasksController.confirmDeleteTask(taskId, title);
     });
   }
+
+  // 12. Focus Mode Button
+  const focusBtns = container.querySelectorAll('.task-focus-btn');
+  for (const btn of focusBtns) {
+    btn.addEventListener('click', () => {
+      const taskId = btn.getAttribute('data-task-id');
+      if (taskId) {
+        focusController.loadTasks(taskId);
+        router.navigate('focus');
+      }
+    });
+  }
 }
+

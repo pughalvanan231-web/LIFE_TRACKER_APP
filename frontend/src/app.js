@@ -20,9 +20,11 @@ import { renderGoalsPage, bindGoalsEvents } from './pages/goals.js';
 import { renderTasksPage, bindTasksEvents } from './pages/tasks.js';
 import { renderProgressPage, bindProgressEvents } from './pages/progress.js';
 import { renderReportsPage, bindReportsEvents } from './pages/reports.js';
-import { renderSettingsPage } from './pages/settings.js';
+import { renderSettingsPage, bindSettingsEvents, settingsController } from './pages/settings.js';
 import { renderProfilePage } from './pages/profile.js';
+import { renderFocusPage, bindFocusEvents } from './pages/focus.js';
 import { destroyAllCharts } from './components/chart-helper.js';
+import { DataEvents, DATA_TOPICS } from './services/data-events.js';
 
 // Auth Pages
 import { renderSignInPage } from './pages/auth/sign-in.js';
@@ -42,12 +44,29 @@ export class App {
     // 1. Initialize Firebase Auth
     authService.init();
 
-    // 2. Subscribe to application state updates
+    // 2. Load settings and apply theme
+    settingsController.loadSettings();
+
+    // 3. Register visibility return listener (refresh authoritative data on app focus)
+    if (typeof document !== 'undefined') {
+      document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'visible') {
+          DataEvents.emit(DATA_TOPICS.PROGRESS_CHANGED, { action: 'app_resumed' });
+          DataEvents.emit(DATA_TOPICS.TASKS_CHANGED, { action: 'app_resumed' });
+        }
+      });
+      window.addEventListener('focus', () => {
+        DataEvents.emit(DATA_TOPICS.PROGRESS_CHANGED, { action: 'app_resumed' });
+        DataEvents.emit(DATA_TOPICS.TASKS_CHANGED, { action: 'app_resumed' });
+      });
+    }
+
+    // 4. Subscribe to application state updates
     this.unsubscribe = appState.subscribe((state) => {
       this.render(state);
     });
 
-    // 3. Initial render
+    // 5. Initial render
     this.render(appState.getState());
   }
 
@@ -129,6 +148,9 @@ export class App {
         break;
       case 'reports':
         pageHTML = renderReportsPage(demoMode);
+        break;
+      case 'focus':
+        pageHTML = renderFocusPage();
         break;
       case 'settings':
         pageHTML = renderSettingsPage();
@@ -349,6 +371,12 @@ export class App {
 
     // 8. Reports & Analytics Interactive Events
     bindReportsEvents(this.mount);
+
+    // 9. Focus Mode Interactive Events
+    bindFocusEvents(this.mount);
+
+    // 10. Settings & Preferences Interactive Events
+    bindSettingsEvents(this.mount);
 
     // 7. Modal Close / Cancel / Confirm
     const modalCloseBtn = this.mount.querySelector('#modal-close-btn');

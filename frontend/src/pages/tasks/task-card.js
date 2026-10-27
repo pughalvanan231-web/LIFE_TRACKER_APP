@@ -98,6 +98,13 @@ export function renderTaskCard({ task, viewMode = 'board', goals = [] } = {}) {
           </span>
 
           <!-- Action Buttons -->
+          <button class="btn btn-ghost btn-icon task-focus-btn" data-task-id="${task.id}" title="Enter Focus Mode" aria-label="Enter focus mode">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"/>
+              <polyline points="12 6 12 12 16 14"/>
+            </svg>
+          </button>
+
           <button class="btn btn-ghost btn-icon task-reschedule-btn" data-task-id="${task.id}" title="Reschedule Task" aria-label="Reschedule task">
             <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M21 2v6h-6M3 12a9 9 0 0 1 15-6.7L21 8M3 22v-6h6M21 12a9 9 0 0 1-15 6.7L3 16"/>
@@ -203,6 +210,13 @@ export function renderTaskCard({ task, viewMode = 'board', goals = [] } = {}) {
 
         <!-- Action Icons -->
         <div class="flex items-center gap-1">
+          <button class="btn btn-ghost btn-icon task-focus-btn" data-task-id="${task.id}" title="Enter Focus Mode" aria-label="Enter focus mode" style="color: inherit; padding: 4px;">
+            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"/>
+              <polyline points="12 6 12 12 16 14"/>
+            </svg>
+          </button>
+
           <button class="btn btn-ghost btn-icon task-reschedule-btn" data-task-id="${task.id}" title="Reschedule Task" aria-label="Reschedule task" style="color: inherit; padding: 4px;">
             <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M21 2v6h-6M3 12a9 9 0 0 1 15-6.7L21 8M3 22v-6h6M21 12a9 9 0 0 1-15 6.7L3 16"/>
