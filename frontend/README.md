@@ -199,3 +199,83 @@ npm run preview
 - Click the **"Preview Demo Data"** button in the top header to toggle sample development fixtures (goals, tasks, and completion metrics).
 - A persistent banner clearly informs the user that demo records are for presentation only and are not real saved user data.
 
+---
+
+## 📱 Progressive Web App (PWA) & Offline Architecture
+
+Life Goals AI is fully compliant with the modern PWA specification:
+- **Web App Manifest (`public/manifest.json`)**: Configured with `display: standalone`, primary portrait orientation, theme color `#4f46e5`, background color `#0b0f19`, and responsive application icons (192x192, 512x512, and SVG).
+- **Service Worker (`public/sw.js`)**:
+  - Automatically registers on secure origins (`https:` or `localhost`).
+  - Pre-caches core application shell assets: `index.html`, `offline.html`, `manifest.json`, and branding icons.
+  - Employs cache-first with network revalidation for static scripts and styles.
+  - **CRITICAL SECURITY RULE**: Never caches authenticated backend API requests (`/api/v1/*`) or requests bearing `Authorization` headers. If the device is offline, API calls fail cleanly with status 503 and a structured error object, ensuring sensitive personal records are never persisted in shared browser caches.
+- **Safe Offline Fallback (`public/offline.html`)**: When the user navigates without an internet connection, a reassuring branded offline screen explains the status and provides a one-tap reconnect button.
+
+### 📲 Installation Instructions
+
+#### Android (Google Chrome & Chromium)
+1. Open the application in Google Chrome over HTTPS.
+2. An **"Add Life Goals AI to Home screen"** prompt will appear automatically at the bottom of the screen.
+3. Alternatively, tap the **⋮ (three dots)** menu in the top-right corner and select **"Install app"** or **"Add to Home screen"**.
+4. Confirm by tapping **Install**. The app will launch in standalone window mode without browser URL bars.
+
+#### iOS / iPadOS (Safari)
+1. Open the application in Safari over HTTPS.
+2. Tap the **Share button** (square with an upward arrow) in the bottom toolbar.
+3. Scroll down and tap **"Add to Home Screen"**.
+4. Tap **Add** in the top-right corner. The app will appear on your Home Screen as a standalone web application.
+
+#### Desktop (Chrome / Edge)
+1. In the address bar, look for the **Install icon** on the right side.
+2. Click **Install Life Goals AI** to run it as a dedicated desktop window.
+
+### 🔒 HTTPS Deployment Guidelines
+Service workers, native notifications, and PWA installation strictly require an HTTPS context. When deploying:
+1. Use an automated SSL certificate provider such as Let's Encrypt, Cloudflare SSL, or Firebase Hosting.
+2. Enforce HTTP-to-HTTPS automatic redirection.
+3. Ensure the backend REST API is hosted on an HTTPS domain (e.g. `https://api.lifegoals.ai`).
+
+---
+
+## 🤖 Android Native Packaging (Capacitor)
+
+Life Goals AI includes native Android packaging configuration powered by [Capacitor](https://capacitorjs.com/):
+- **Application ID:** `com.lifegoals.ai`
+- **Application Name:** `Life Goals AI`
+- **Configuration File:** [`capacitor.config.json`](file:///d:/projects/life_tracker_app/frontend/capacitor.config.json)
+- **Native Android Directory:** [`frontend/android`](file:///d:/projects/life_tracker_app/frontend/android)
+- **Security Rule:** Enforces `androidScheme: "https"` with `cleartext: false` to strictly prevent unencrypted HTTP traffic.
+
+### 🧱 Environment Prerequisites for Building the APK
+To assemble the native debug or release APK, the following build environment dependencies are required:
+1. **JDK 17 or JDK 21**: Modern Gradle 8.14+ and Android Gradle Plugin 8.x require Java 17+.
+2. **Android SDK & Build Tools**: Android SDK Platform 34 or 35 and Build-Tools 34.0.0+.
+3. **Environment Variables**:
+   - `ANDROID_HOME` or `ANDROID_SDK_ROOT` pointing to your local Android SDK directory (e.g. `C:\Users\<user>\AppData\Local\Android\Sdk`).
+   - `JAVA_HOME` pointing to JDK 17+.
+
+### ⚙️ Build Steps (Once Prerequisites are Installed)
+```bash
+# 1. Build the fresh production web bundle
+npm run build
+
+# 2. Sync the web assets into the native Android assets directory
+npx cap sync android
+
+# 3. Assemble the Debug APK using Gradle
+cd android
+./gradlew assembleDebug
+
+# Output APK location:
+# frontend/android/app/build/outputs/apk/debug/app-debug.apk
+```
+
+### ⚠️ Current Environment Status & Blocker Report
+- **Capacitor Android Project:** Fully scaffolded and synchronized with latest web assets in `frontend/android`.
+- **Identified Blockers:**
+  1. *Java Version:* Current host environment has legacy Java 8 (`1.8.0_401`), which cannot run Gradle 8.14+.
+  2. *Android SDK:* `ANDROID_HOME` and `ANDROID_SDK_ROOT` are not defined in the environment.
+- **Next Steps for Generating APK:** Install [Android Studio](https://developer.android.com/studio) or command-line tools with JDK 17, set `ANDROID_HOME`, and execute `cd android && ./gradlew assembleDebug`.
+
+

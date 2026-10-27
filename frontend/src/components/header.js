@@ -8,6 +8,7 @@ const ROUTE_TITLES = {
   tasks: { title: 'Daily Tasks & Planning', subtitle: 'Actionable steps aligned to your priorities' },
   progress: { title: 'Daily Review & Progress', subtitle: 'Reflection, habit consistency, and completion tracking' },
   reports: { title: 'Reports & Analytics', subtitle: 'Historical performance breakdowns and trends' },
+  focus: { title: 'Focus Mode', subtitle: 'Distraction-free single task execution and session tracking' },
   settings: { title: 'Settings', subtitle: 'Preferences, time zones, and notifications' },
   profile: { title: 'Account & Profile', subtitle: 'Identity, security, and verified session claims' },
 };
@@ -19,7 +20,7 @@ export function renderHeader(currentRoute, demoMode, user) {
   return `
     <header class="app-header">
       <div class="header-title-wrap">
-        <button id="sidebar-toggle-btn" class="btn btn-ghost btn-icon" style="display: none;" aria-label="Toggle Navigation Menu">
+        <button id="sidebar-toggle-btn" class="btn btn-ghost btn-icon mobile-menu-toggle" aria-label="Toggle Navigation Menu">
           <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
             <line x1="3" y1="12" x2="21" y2="12"/>
             <line x1="3" y1="6" x2="21" y2="6"/>

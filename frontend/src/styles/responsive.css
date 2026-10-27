@@ -23,9 +23,22 @@
     margin-left: 0;
   }
 
+  /* Show Mobile Menu Hamburger Toggle */
+  .mobile-menu-toggle {
+    display: inline-flex !important;
+  }
+
   /* Show Mobile Bottom Navigation */
   .mobile-bottom-nav {
     display: flex;
+  }
+
+  /* Touch Target minimum sizes for mobile navigation and interactive controls */
+  .mobile-bottom-nav .mobile-nav-item,
+  .mobile-menu-toggle,
+  .btn-icon {
+    min-height: 44px;
+    min-width: 44px;
   }
 
   /* Extra bottom padding on page container so content is never occluded by bottom bar */
@@ -69,4 +82,25 @@
     margin: var(--space-2);
     max-height: 90vh;
   }
+
+  /* Ensure touch targets meet minimum 44px on mobile phones */
+  .btn, .input-control, select.input-control {
+    min-height: 44px;
+  }
 }
+
+/* ==========================================================================
+   ACCESSIBILITY: REDUCED MOTION PREFERENCE
+   Disables disorienting transitions and animations for users with vestibular needs
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+

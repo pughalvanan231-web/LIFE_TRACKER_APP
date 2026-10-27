@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Offline — Life Goals AI</title>
+  <style>
+    :root {
+      --color-bg: #0b0f19;
+      --color-card: #131b2e;
+      --color-text: #f8fafc;
+      --color-muted: #94a3b8;
+      --color-primary: #6366f1;
+    }
+    body {
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: var(--color-bg);
+      color: var(--color-text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      text-align: center;
+      box-sizing: border-box;
+      padding: 1.5rem;
+    }
+    .offline-card {
+      background: var(--color-card);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 1rem;
+      padding: 2.5rem 2rem;
+      max-width: 440px;
+      width: 100%;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
+    }
+    .icon {
+      width: 56px;
+      height: 56px;
+      margin: 0 auto 1.5rem;
+      border-radius: 50%;
+      background: rgba(99, 102, 241, 0.15);
+      color: var(--color-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    h1 {
+      font-size: 1.5rem;
+      margin: 0 0 0.75rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+    p {
+      color: var(--color-muted);
+      font-size: 0.95rem;
+      line-height: 1.5;
+      margin: 0 0 1.5rem;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      background: var(--color-primary);
+      color: #ffffff;
+      padding: 0.75rem 1.5rem;
+      border-radius: 0.5rem;
+      font-weight: 600;
+      font-size: 0.95rem;
+      text-decoration: none;
+      cursor: pointer;
+      border: none;
+      min-height: 44px;
+    }
+    .btn:hover {
+      background: #4f46e5;
+    }
+    .security-note {
+      font-size: 0.75rem;
+      color: var(--color-muted);
+      margin-top: 1.5rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding-top: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="offline-card" role="region" aria-label="Offline Notification">
+    <div class="icon">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="1" y1="1" x2="23" y2="23"></line>
+        <path d="M16.72 11.06A10.94 10.94 0 0 1 19 12.55"></path>
+        <path d="M5 12.55a10.94 10.94 0 0 1 5.17-2.39"></path>
+        <path d="M10.71 5.05A16 16 0 0 1 22.58 9"></path>
+        <path d="M1.42 9a15.91 15.91 0 0 1 4.7-2.88"></path>
+        <path d="M8.53 16.11a6 6 0 0 1 6.95 0"></path>
+        <line x1="12" y1="20" x2="12.01" y2="20"></line>
+      </svg>
+    </div>
+    <h1>You're Currently Offline</h1>
+    <p>Life Goals AI could not connect to the server. Please check your internet connection to sync your goals, tasks, and reviews.</p>
+    <button class="btn" onclick="window.location.reload()">
+      Retry Connection
+    </button>
+    <div class="security-note">
+      For security and privacy, sensitive authenticated data is never stored in shared browser caches while offline.
+    </div>
+  </div>
+</body>
+</html>
