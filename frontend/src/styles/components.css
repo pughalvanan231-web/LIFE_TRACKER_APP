@@ -763,4 +763,196 @@
   padding-left: 36px;
 }
 
+/* --------------------------------------------------------------------------
+   16. Digital Sticky Notes & Task Board
+   -------------------------------------------------------------------------- */
+.sticky-board {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+  gap: var(--space-4);
+  align-items: stretch;
+}
+
+@media (max-width: 640px) {
+  .sticky-board {
+    grid-template-columns: 1fr;
+    gap: var(--space-3);
+  }
+}
+
+.sticky-note {
+  position: relative;
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--space-3);
+  min-height: 190px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.06), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+  border: 1px solid transparent;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast), opacity var(--transition-fast);
+}
+
+.sticky-note:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.04);
+}
+
+/* Pastel Sticky Note Color Themes */
+.sticky-yellow {
+  background-color: #fef9c3;
+  border-color: #fde047;
+  color: #713f12;
+}
+
+.sticky-rose {
+  background-color: #ffe4e6;
+  border-color: #fecdd3;
+  color: #881337;
+}
+
+.sticky-mint {
+  background-color: #dcfce7;
+  border-color: #bbf7d0;
+  color: #14532d;
+}
+
+.sticky-sky {
+  background-color: #e0f2fe;
+  border-color: #bae6fd;
+  color: #0c4a6e;
+}
+
+.sticky-lavender {
+  background-color: #f3e8ff;
+  border-color: #e9d5ff;
+  color: #581c87;
+}
+
+.sticky-peach {
+  background-color: #ffedd5;
+  border-color: #fed7aa;
+  color: #7c2d12;
+}
+
+/* Completed & Status States */
+.sticky-note.completed {
+  opacity: 0.65;
+  filter: grayscale(20%);
+}
+
+.sticky-note.completed .task-title {
+  text-decoration: line-through;
+  opacity: 0.8;
+}
+
+.sticky-pin {
+  width: 10px;
+  height: 10px;
+  border-radius: var(--radius-full);
+  background: rgba(0, 0, 0, 0.15);
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* Compact Task List Alternative */
+.task-compact-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.task-compact-row {
+  background-color: var(--color-surface-card);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-md);
+  padding: var(--space-3) var(--space-4);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  transition: all var(--transition-fast);
+}
+
+.task-compact-row:hover {
+  background-color: var(--color-surface-hover);
+  border-color: var(--color-border-medium);
+}
+
+.task-compact-row.completed {
+  opacity: 0.7;
+}
+
+.task-compact-row.completed .task-title {
+  text-decoration: line-through;
+  color: var(--color-text-muted);
+}
+
+/* Daily Planner Workload Meter */
+.workload-meter {
+  background-color: var(--color-surface-card);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.workload-bar-track {
+  height: 10px;
+  background-color: var(--color-surface-hover);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  position: relative;
+}
+
+.workload-bar-fill {
+  height: 100%;
+  border-radius: var(--radius-full);
+  transition: width var(--transition-normal), background-color var(--transition-normal);
+}
+
+.workload-warning-banner {
+  background-color: var(--color-danger-bg);
+  border-left: 4px solid var(--color-danger-solid);
+  padding: var(--space-3);
+  border-radius: var(--radius-sm);
+  color: var(--color-danger-text);
+  font-size: var(--font-size-xs);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+/* Color Picker Swatches */
+.color-swatch-picker {
+  display: flex;
+  gap: var(--space-2);
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.color-swatch {
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-full);
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: transform var(--transition-fast);
+}
+
+.color-swatch:hover {
+  transform: scale(1.15);
+}
+
+.color-swatch.active {
+  border-color: var(--color-text-primary);
+  transform: scale(1.15);
+}
+
+
 

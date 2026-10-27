@@ -17,7 +17,7 @@ import { renderLoadingState } from './components/loading-state.js';
 // Application Pages
 import { renderHomePage } from './pages/home.js';
 import { renderGoalsPage, bindGoalsEvents } from './pages/goals.js';
-import { renderTasksPage } from './pages/tasks.js';
+import { renderTasksPage, bindTasksEvents } from './pages/tasks.js';
 import { renderProgressPage } from './pages/progress.js';
 import { renderReportsPage } from './pages/reports.js';
 import { renderSettingsPage } from './pages/settings.js';
@@ -336,38 +336,8 @@ export class App {
     // 4. Goals & Milestones Interactive Events
     bindGoalsEvents(this.mount);
 
-    // 5. Task Creation Modals
-    const addTaskBtn = this.mount.querySelector('#add-task-btn');
-    const addTaskEmptyBtn = this.mount.querySelector('#add-task-empty-btn');
-    const handleAddTask = () => {
-      appState.openModal({
-        title: 'Schedule Actionable Task',
-        content: `
-          <div class="flex flex-col gap-4">
-            <div class="form-group">
-              <label class="form-label" for="new-task-title">Task Title</label>
-              <input id="new-task-title" class="form-input" placeholder="e.g., Morning tempo run or Chapter outline" />
-            </div>
-            <div class="form-group">
-              <label class="form-label" for="new-task-duration">Estimated Duration (Minutes)</label>
-              <input id="new-task-duration" type="number" class="form-input" value="45" min="5" max="480" />
-            </div>
-            <div class="form-group">
-              <label class="form-label" for="new-task-priority">Priority</label>
-              <select id="new-task-priority" class="form-select">
-                <option value="high">High Priority</option>
-                <option value="medium" selected>Medium Priority</option>
-                <option value="low">Low Priority</option>
-              </select>
-            </div>
-          </div>
-        `,
-        confirmText: 'Schedule Task',
-        cancelText: 'Cancel',
-      });
-    };
-    if (addTaskBtn) addTaskBtn.addEventListener('click', handleAddTask);
-    if (addTaskEmptyBtn) addTaskEmptyBtn.addEventListener('click', handleAddTask);
+    // 5. Tasks & Daily Planner Interactive Events
+    bindTasksEvents(this.mount);
 
     // 6. Save Daily Review Button
     const saveReviewBtn = this.mount.querySelector('#save-review-btn');
