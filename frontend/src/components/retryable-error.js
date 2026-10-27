@@ -13,13 +13,23 @@ import { ApiError } from '../services/api-error.js';
 
 export function renderRetryableError({
   error,
+  message,
   retryButtonId = 'error-retry-btn',
+  retryId = null,
   title = 'Unable to Load Data',
 } = {}) {
+  const actualRetryId = retryId || retryButtonId;
   const isApiError = error instanceof ApiError;
-  const userMessage = isApiError
-    ? error.getUserFriendlyMessage()
-    : (error && error.message) || 'An unexpected error occurred. Please try again.';
+  let userMessage = 'An unexpected error occurred. Please try again.';
+  if (isApiError) {
+    userMessage = error.getUserFriendlyMessage();
+  } else if (typeof error === 'string') {
+    userMessage = error;
+  } else if (error && error.message) {
+    userMessage = error.message;
+  } else if (message) {
+    userMessage = message;
+  }
 
   const errorCode = isApiError ? error.code : 'CLIENT_ERROR';
   const requestId = isApiError ? error.requestId : null;
@@ -59,7 +69,7 @@ export function renderRetryableError({
             isRetryable
               ? `
             <div style="margin-top: var(--space-3);">
-              <button id="${retryButtonId}" class="btn btn-outline btn-sm">
+              <button id="${actualRetryId}" class="btn btn-outline btn-sm">
                 <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
                   <path d="M21 2v6h-6M3 12a9 9 0 0 1 15-6.7L21 8M3 22v-6h6M21 12a9 9 0 0 1-15 6.7L3 16"/>
                 </svg>

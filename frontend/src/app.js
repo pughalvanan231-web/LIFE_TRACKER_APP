@@ -15,13 +15,14 @@ import { renderToastContainer } from './components/toast.js';
 import { renderLoadingState } from './components/loading-state.js';
 
 // Application Pages
-import { renderHomePage } from './pages/home.js';
+import { renderHomePage, bindHomeEvents } from './pages/home.js';
 import { renderGoalsPage, bindGoalsEvents } from './pages/goals.js';
 import { renderTasksPage, bindTasksEvents } from './pages/tasks.js';
-import { renderProgressPage } from './pages/progress.js';
-import { renderReportsPage } from './pages/reports.js';
+import { renderProgressPage, bindProgressEvents } from './pages/progress.js';
+import { renderReportsPage, bindReportsEvents } from './pages/reports.js';
 import { renderSettingsPage } from './pages/settings.js';
 import { renderProfilePage } from './pages/profile.js';
+import { destroyAllCharts } from './components/chart-helper.js';
 
 // Auth Pages
 import { renderSignInPage } from './pages/auth/sign-in.js';
@@ -51,6 +52,7 @@ export class App {
   }
 
   render(state) {
+    destroyAllCharts();
     const { currentRoute, demoMode, isSidebarOpen, modal, notifications, isAuthenticated, authLoading, user, backendUser } = state;
 
     // 1. Initial Session Verification Screen
@@ -339,13 +341,14 @@ export class App {
     // 5. Tasks & Daily Planner Interactive Events
     bindTasksEvents(this.mount);
 
-    // 6. Save Daily Review Button
-    const saveReviewBtn = this.mount.querySelector('#save-review-btn');
-    if (saveReviewBtn) {
-      saveReviewBtn.addEventListener('click', () => {
-        appState.showToast('Daily review submitted. Progress snapshot recorded!', 'success');
-      });
-    }
+    // 6. Home Dashboard Interactive Events
+    bindHomeEvents(this.mount);
+
+    // 7. Daily Review & Progress Interactive Events
+    bindProgressEvents(this.mount);
+
+    // 8. Reports & Analytics Interactive Events
+    bindReportsEvents(this.mount);
 
     // 7. Modal Close / Cancel / Confirm
     const modalCloseBtn = this.mount.querySelector('#modal-close-btn');
